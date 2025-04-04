@@ -25,21 +25,7 @@
       <div id="navigation" class="">
         <ul class="!tw-pl-0">
           <li><a href="/home"><h6>HOME</h6></a></li>
-          <li><div class="dropdown">
-            @if (Auth::user()->role == 'A')
-            <button class="dropbtn"><h6>ADD</h6></button>
-            @endif
-
-
-            <div class="dropdown-content">
-              <a href="{{route('listfilm.create')}}">FILM</a>
-              <a href="{{route('genre.create')}}">GENRE</a>
-              <a href="{{route('studio.create')}}">STUDIO</a>
-              <a href="{{route('jenis.create')}}">JENIS</a>
-              <a href="{{route('rating.create')}}">RATING</a>
-            </div>
-
-          </div></li>
+          <li><a href="{{route('jual.create')}}"><h6>JUAL</h6></a></li>
           <li>
             <div class="dropdown">
               <button class="dropbtn"><img src="{{asset('images/profile-placeholder.png')}}" width="35px" height="auto" class="tw-rounded-[100%]"><span style="margin-left: 10px">{{Auth::user()->name}}</span></button>
@@ -59,10 +45,8 @@
     </div>
     <div id="sub-navigation" class="navbar navbar-dark bg-dark !tw-flex tw-flex-wrap">
       <ul>
-        <li><a href="{{route('genre.index')}}">GENRES</a></li>
-        <li><a href="{{route('studio.index')}}">STUDIOS</a></li>
-        <li><a href="{{route('jenis.index')}}">JENIS</a></li>
-        <li><a href="{{route('rating.index')}}">RATINGS</a></li>
+        <li><a href="{{route('beli.index')}}">Daftar Beli</a></li>
+        <li><a href="{{route('jual.index')}}">Daftar Jual</a></li>
       </ul>
 
       <div id="search">

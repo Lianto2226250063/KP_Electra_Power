@@ -1,11 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\GenreController;
-use App\Http\Controllers\API\JenisController;
-use App\Http\Controllers\API\ListfilmController;
-use App\Http\Controllers\API\RatingController;
-use App\Http\Controllers\API\StudioController;
+use App\Http\Controllers\API\JualController;
+use App\Http\Controllers\API\BeliController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,28 +24,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::get('genre',[GenreController::class, 'index']);
-Route::post('genre', [GenreController::class, 'store']);
-Route::post('genre/{id}', [GenreController::class, 'update']);
-Route::delete('genre/{id}', [GenreController::class, 'destroy']);
+Route::get('beli',[BeliController::class, 'index']);
+Route::post('beli', [BeliController::class, 'store']);
+Route::post('beli/{id}', [BeliController::class, 'update']);
+Route::delete('beli/{id}', [BeliController::class, 'destroy']);
 
-Route::get('jenis',[JenisController::class, 'index']);
-Route::post('jenis', [JenisController::class, 'store']);
-Route::post('jenis/{id}', [JenisController::class, 'update']);
-Route::delete('jenis/{id}', [JenisController::class, 'destroy']);
-
-Route::get('rating',[RatingController::class, 'index']);
-Route::post('rating', [RatingController::class, 'store']);
-Route::post('rating/{id}', [RatingController::class, 'update']);
-Route::delete('rating/{id}', [RatingController::class, 'destroy']);
-
-Route::get('studio',[StudioController::class, 'index']);
-Route::post('studio', [StudioController::class, 'store']);
-Route::post('studio/{id}', [StudioController::class, 'update']);
-Route::delete('studio/{id}', [StudioController::class, 'destroy']);
-
-Route::get('listfilm',[ListfilmController::class, 'index']);
-Route::post('listfilm', [ListfilmController::class, 'store']);
-Route::post('listfilm/{id}', [ListfilmController::class, 'update']);
-Route::delete('listfilm/{id}', [ListfilmController::class, 'destroy']);
+Route::get('jual',[JualController::class, 'index']);
+Route::post('jual', [JualController::class, 'store']);
+Route::post('jual/{id}', [JualController::class, 'update']);
+Route::delete('jual/{id}', [JualController::class, 'destroy']);
 

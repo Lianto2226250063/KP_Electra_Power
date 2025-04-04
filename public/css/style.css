@@ -223,18 +223,18 @@ h1#logo a {
 .movie-image {
 	float:left;
 	width:152px;
-	height:214px;
+	height:152px;
 	position:relative;
 }
 .movie-image img {
 	width:152px;
-	height:214px;
+	height:152px;
 }
 .movie-image a {
 	float:left;
 	display:inline;
 	width:152px;
-	height:214px;
+	height:152px;
 	position:relative;
 	z-index:2;
 }

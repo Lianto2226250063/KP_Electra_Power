@@ -3,12 +3,9 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GenreController;
-use App\Http\Controllers\JenisController;
-use App\Http\Controllers\ListfilmController;
+use App\Http\Controllers\JualController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RatingController;
-use App\Http\Controllers\StudioController;
+use App\Http\Controllers\BeliController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,12 +27,12 @@ Route::get('/', function () {
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-Route::get('/home', [ListfilmController::class, 'index'])->name('home');
-Route::get('/{listfilm}', [ListfilmController::class, 'show'])->name('listfilm.show');
+Route::get('/home', [JualController::class, 'index'])->name('home');
+Route::get('/{jual}', [JualController::class, 'show'])->name('jual.show');
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function () {
 
-    Route::controller(GenreController::class)->prefix('/genre')->name('genre.')->group(function () {
+    Route::controller(BeliController::class)->prefix('/beli')->name('beli.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/store', 'store')->name('store');
@@ -44,40 +41,14 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
         Route::delete('/delete/{id}', 'destroy')->name('destroy');
         Route::get('/show/{id}','show')->name('show');
     });
-    Route::controller(StudioController::class)->prefix('/studio')->name('studio.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create','create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::patch('/update/{id}', 'update')->name('update');
-        Route::delete('/delete/{id}', 'destroy')->name('destroy');
-        Route::get('/show/{id}','show')->name('show');
     });
-    Route::controller(JenisController::class)->prefix('/jenis')->name('jenis.')->group(function () {
+    Route::controller(JualController::class)->prefix('/jual')->name('jual.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::patch('/update/{id}', 'update')->name('update');
-        Route::delete('/delete/{id}', 'destroy')->name('destroy');
-        Route::get('/show/{id}','show')->name('show');
-    });
-    Route::controller(RatingController::class)->prefix('/rating')->name('rating.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create','create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::patch('/update/{id}', 'update')->name('update');
-        Route::delete('/delete/{id}', 'destroy')->name('destroy');
-        Route::get('/show/{id}','show')->name('show');
-    });
-    Route::controller(ListfilmController::class)->prefix('/listfilm')->name('listfilm.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create','create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{listfilm}', 'edit')->name('edit');
-        Route::patch('/update/{listfilm}', 'update')->name('update');
-        Route::delete('/delete/{listfilm}', 'destroy')->name('destroy');
+        Route::get('/edit/{jual}', 'edit')->name('edit');
+        Route::patch('/update/{jual}', 'update')->name('update');
+        Route::delete('/delete/{jual}', 'destroy')->name('destroy');
     });
     Route::controller(UserController::class)->prefix('/user')->name('user.')->group(function () {
         Route::get('/', 'index')->name('index');
@@ -87,10 +58,6 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
         Route::patch('/update/{id}', 'update')->name('update');
         Route::delete('/delete/{id}', 'destroy')->name('destroy');
     });
-});
-
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

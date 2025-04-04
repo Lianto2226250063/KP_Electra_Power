@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\listfilm;
+use App\Models\jual;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ListfilmController extends Controller
+class JualController extends Controller
 {
     public function index(){
-        $listfilm = listfilm::all();
-        if ($listfilm->isEmpty()) {
-            $response['message'] = 'Tidak ada film yang ditemukan.';
+        $jual = jual::all();
+        if ($jual->isEmpty()) {
+            $response['message'] = 'Tidak ada data yang ditemukan.';
             $response['success'] = false;
             return response()->json($response, Response::HTTP_NOT_FOUND);
         }
 
         $response['success'] = true;
-        $response['message'] = 'film ditemukan.';
-        $response['data'] = $listfilm;
+        $response['message'] = 'data ditemukan.';
+        $response['data'] = $jual;
         return response()->json($response, Response::HTTP_OK);
     }
 
@@ -29,18 +29,15 @@ class ListfilmController extends Controller
             'foto' => 'image',
             'nama' => 'required',
             'deskripsi' => 'required',
-            'produser' => 'required',
-            'skor' => 'required',
-            'genre_id' => 'required',
-            'studio_id' => 'required',
-            'rating_id' => 'required',
-            'jenis_id' => 'required'
+            'penjual' => 'required',
+            'harga' => 'required',
+            'toko' => 'required',
         ]);
 
-        $listfilm = listfilm::create($validate);
-        if($listfilm){
+        $jual = jual::create($validate);
+        if($jual){
             $response['success'] = true;
-            $response['message'] = 'film berhasil ditambahkan.';
+            $response['message'] = 'data berhasil ditambahkan.';
             return response()->json($response, Response::HTTP_CREATED);
         }
     }
@@ -51,31 +48,28 @@ class ListfilmController extends Controller
             'foto' => 'image',
             'nama' => 'required',
             'deskripsi' => 'required',
-            'produser' => 'required',
-            'skor' => 'required',
-            'genre_id' => 'required',
-            'studio_id' => 'required',
-            'rating_id' => 'required',
-            'jenis_id' => 'required'
+            'penjual' => 'required',
+            'harga' => 'required',
+            'toko' => 'required',
         ]);
 
-        listfilm::where('id', $id)->update($validate);
+        jual::where('id', $id)->update($validate);
         $response['success'] = true;
-        $response['message'] = 'film berhasil diperbarui.';
+        $response['message'] = 'data berhasil diperbarui.';
         return response()->json($response, Response::HTTP_OK);
     }
 
     public function destroy($id)
     {
-        $listfilm = listfilm::where('id', $id);
-        if(count($listfilm->get())){
-            $listfilm->delete();
+        $jual = jual::where('id', $id);
+        if(count($jual->get())){
+            $jual->delete();
             $response['success'] = true;
-            $response['message'] = 'film berhasil dihapus.';
+            $response['message'] = 'data berhasil dihapus.';
             return response()->json($response, Response::HTTP_OK);
         } else {
             $response['success'] = false;
-            $response['message'] = 'film tidak ditemukan.';
+            $response['message'] = 'data tidak ditemukan.';
             return response()->json($response, Response::HTTP_NOT_FOUND);
         } 
     }

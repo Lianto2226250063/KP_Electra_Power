@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validate = $request->validate([
-            'name'  => 'required',
+            'name'  => 'required|unique:users,name',
             'email' => 'required|email',
             'password'  => 'required',
             'role' => 'required'
@@ -34,11 +34,11 @@ class AuthController extends Controller
             'password' => $request->password
         ])) {
             $user = Auth::user();
-            if($user->role == 'A'){
-                $success['token'] = $user->createToken('MDPApp', ['create-genre', 'read-genre', 'update-genre', 'delete-genre'])->plainTextToken;
-            } else {
-                $success['token'] = $user->createToken('MDPApp', ['read-genre'])->plainTextToken;
-            }
+            // if($user->role == 'A'){
+            //     $success['token'] = $user->createToken('MDPApp', ['create-beli', 'read-beli', 'update-beli', 'delete-beli'])->plainTextToken;
+            // } else {
+            //     $success['token'] = $user->createToken('MDPApp', ['read-beli'])->plainTextToken;
+            // }
             $success['name'] = $user->name;
             return response()->json($success, 201);
         } else {
