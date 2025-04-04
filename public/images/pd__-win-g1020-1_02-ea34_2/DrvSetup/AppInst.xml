@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<INSTAPP>
+  <file_details>
+    <!-- インストーラ起動時 -->
+    <file num="0">
+      <name>SCNUTIL</name>
+      <if>3</if>
+      <directory>..\SCNUTIL\ScanUtility\setup.exe</directory>
+      <directory64>..\SCNUTIL\ScanUtility\setup.exe</directory64>
+      <option>-NOUI -NOEULA -CHECKAPP %-MSETUP% -LANG:0x%ID%</option>
+      <option64>-NOUI -NOEULA -CHECKAPP %-MSETUP% -LANG:0x%ID%</option64>
+      <timing>0</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <!-- INFInst前 -->
+    <file num="1">
+      <name>TWAIN</name>
+      <if>1</if>
+      <directory>..\SCNUTIL\Twain\Setup.exe</directory>
+      <directory64>..\SCNUTIL\Twain\Setup.exe</directory64>
+      <option>-VERSIONCHECK -DEV:"%MODELNAME%"</option>
+      <option64>-VERSIONCHECK -DEV:"%MODELNAME%"</option64>
+      <timing>1</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="2">
+      <name>SCNUTIL</name>
+      <if>1</if>
+      <directory>..\SCNUTIL\ScanUtility\setup.exe</directory>
+      <directory64>..\SCNUTIL\ScanUtility\setup.exe</directory64>
+      <option>-NOUI -NOEULA %-MSETUP% -LANG:0x%ID% -PNAME:"%MODELNAME%" –NOSMEXUPDATE</option>
+      <option64>-NOUI -NOEULA %-MSETUP% -LANG:0x%ID% -PNAME:"%MODELNAME%" –NOSMEXUPDATE</option64>
+      <timing>1</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <!-- PnP検知後 -->
+    <file num="3">
+      <name>EXTRA</name>
+      <if>1</if>
+      <directory>..\Extra\Setup.exe</directory>
+      <directory64>..\Extra\Setup.exe</directory64>
+      <option>"Software\Canon\GARO\Exkit\AppInstaller" -SILENT_C</option>
+      <option64>"Software\Canon\GARO\Exkit\AppInstaller" -SILENT_C</option64>
+      <timing>2</timing>
+      <flags>1</flags>
+      <exitcode>2</exitcode>
+    </file>
+    <file num="4">
+      <name>AUTOCAD</name>
+      <if>1</if>
+      <directory>..\OptDrv\32bit\Setup.exe</directory>
+      <directory64>..\OptDrv\64bit\Setup.exe</directory64>
+      <option> /Silent</option>
+      <option64> /Silent</option64>
+      <timing>2</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="5">
+      <name>IJPAT</name>
+      <if>1</if>
+      <directory>..\IJPAT\Setup.exe</directory>
+      <directory64>..\IJPAT\Setup.exe</directory64>
+      <option>"Software\Canon\CNMPA\AppInstaller" -SILENT_C </option>
+      <option64>"Software\Canon\CNMPA\AppInstaller" -SILENT_C </option64>
+      <timing>2</timing>
+      <flags>1</flags>
+      <exitcode>2</exitcode>
+    </file>
+    <file num="6">
+      <name>SETEVENT</name>
+      <if>1</if>
+      <directory>..\SCNUTIL\ScanUtility\SetEvent\SETEVENT.exe</directory>
+      <directory64>..\SCNUTIL\ScanUtility\SetEvent\SETEVENT.exe</directory64>
+      <option>-e="regist" -d="%MODELNAME%" -l="%SCNUTILPATH%"</option>
+      <option64>-e="regist" -d="%MODELNAME%" -l="%SCNUTILPATH%"</option64>
+      <timing>2</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <!-- NWポート生成後 -->
+    <file num="7">
+      <name>TWAIN</name>
+      <if>2</if>
+      <directory>..\SCNUTIL\Twain\Setup.exe</directory>
+      <directory64>..\SCNUTIL\Twain\Setup.exe</directory64>
+      <option>-VERSIONCHECK -MACADDR:%__MACADDRESS__% -IP:%__IPADDR_TWAIN__% -DEV:"%MODELNAME%"</option>
+      <option64>-VERSIONCHECK -MACADDR:%__MACADDRESS__% -IP:%__IPADDR_TWAIN__% -DEV:"%MODELNAME%"</option64>
+      <timing>3</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="8">
+      <name>SELECTOR</name>
+      <if>2</if>
+      <directory>..\LANUtil\SELECTOR\setup.exe</directory>
+      <directory64>..\LANUtil\SELECTOR\setup.exe</directory64>
+      <option>-NOEULA -NOUI %-MSETUP% -LANG:0x%ID%</option>
+      <option64>-NOEULA -NOUI %-MSETUP% -LANG:0x%ID%</option64>
+      <timing>3</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="9">
+      <name>SCNUTIL</name>
+      <if>2</if>
+      <directory>..\SCNUTIL\ScanUtility\setup.exe</directory>
+      <directory64>..\SCNUTIL\ScanUtility\setup.exe</directory64>
+      <option>-NOUI -NOEULA %-MSETUP% -LANG:0x%ID% -PNAME:"%MODELNAME%" -NOSMEXUPDATE -NWINST</option>
+      <option64>-NOUI -NOEULA %-MSETUP% -LANG:0x%ID% -PNAME:"%MODELNAME%" -NOSMEXUPDATE -NWINST</option64>
+      <timing>3</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="10">
+      <name>EXTRA</name>
+      <if>2</if>
+      <directory>..\Extra\Setup.exe</directory>
+      <directory64>..\Extra\Setup.exe</directory64>
+      <option>"Software\Canon\GARO\Exkit\AppInstaller" -SILENT_C</option>
+      <option64>"Software\Canon\GARO\Exkit\AppInstaller" -SILENT_C</option64>
+      <timing>3</timing>
+      <flags>1</flags>
+      <exitcode>2</exitcode>
+    </file>
+    <file num="11">
+      <name>AUTOCAD</name>
+      <if>2</if>
+      <directory>..\OptDrv\32bit\Setup.exe</directory>
+      <directory64>..\OptDrv\64bit\Setup.exe</directory64>
+      <option> \Silent</option>
+      <option64> \Silent</option64>
+      <timing>3</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="12">
+      <name>IJPAT</name>
+      <if>2</if>
+      <directory>..\IJPAT\Setup.exe</directory>
+      <directory64>..\IJPAT\Setup.exe</directory64>
+      <option>"Software\Canon\CNMPA\AppInstaller" -SILENT_C </option>
+      <option64>"Software\Canon\CNMPA\AppInstaller" -SILENT_C </option64>
+      <timing>3</timing>
+      <flags>1</flags>
+      <exitcode>2</exitcode>
+    </file>
+    <!-- ポート手動選択後 -->
+    <file num="13">
+      <name>EXTRA</name>
+      <if>0</if>
+      <directory>..\Extra\Setup.exe</directory>
+      <directory64>..\Extra\Setup.exe</directory64>
+      <option> "Software\Canon\GARO\Exkit\AppInstaller" -SILENT_C</option>
+      <option64>"Software\Canon\GARO\Exkit\AppInstaller" -SILENT_C</option64>
+      <timing>4</timing>
+      <flags>1</flags>
+      <exitcode>2</exitcode>
+    </file>
+    <file num="14">
+      <name>AUTOCAD</name>
+      <if>0</if>
+      <directory>..\OptDrv\32bit\Setup.exe</directory>
+      <directory64>..\OptDrv\64bit\Setup.exe</directory64>
+      <option> \Silent</option>
+      <option64> \Silent</option64>
+      <timing>4</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="15">
+      <name>IJPAT</name>
+      <if>0</if>
+      <directory>..\IJPAT\Setup.exe</directory>
+      <directory64>..\IJPAT\Setup.exe</directory64>
+      <option> "Software\Canon\CNMPA\AppInstaller" -SILENT_C </option>
+      <option64> "Software\Canon\CNMPA\AppInstaller" -SILENT_C </option64>
+      <timing>4</timing>
+      <flags>1</flags>
+      <exitcode>2</exitcode>
+    </file>
+    <!-- 後で接続する選択後 -->
+    <file num="16">
+      <name>TWAIN</name>
+      <if>4</if>
+      <directory>..\SCNUTIL\Twain\Setup.exe</directory>
+      <directory64>..\SCNUTIL\Twain\Setup.exe</directory64>
+      <option>-VERSIONCHECK -DEV:"%MODELNAME%"</option>
+      <option64>-VERSIONCHECK -DEV:"%MODELNAME%"</option64>
+      <timing>5</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="17">
+      <name>SCNUTIL</name>
+      <if>4</if>
+      <directory>..\SCNUTIL\ScanUtility\setup.exe</directory>
+      <directory64>..\SCNUTIL\ScanUtility\setup.exe</directory64>
+      <option>-NOUI -NOEULA %-MSETUP% -LANG:0x%ID% -PNAME:"%MODELNAME%" –NOSMEXUPDATE</option>
+      <option64>-NOUI -NOEULA %-MSETUP% -LANG:0x%ID% -PNAME:"%MODELNAME%" –NOSMEXUPDATE</option64>
+      <timing>5</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="18">
+      <name>EXTRA</name>
+      <if>4</if>
+      <directory>..\Extra\Setup.exe</directory>
+      <directory64>..\Extra\Setup.exe</directory64>
+      <option>"Software\Canon\GARO\Exkit\AppInstaller" -SILENT_C</option>
+      <option64>"Software\Canon\GARO\Exkit\AppInstaller" -SILENT_C</option64>
+      <timing>5</timing>
+      <flags>1</flags>
+      <exitcode>2</exitcode>
+    </file>
+    <file num="19">
+      <name>AUTOCAD</name>
+      <if>4</if>
+      <directory>..\OptDrv\32bit\Setup.exe</directory>
+      <directory64>..\OptDrv\64bit\Setup.exe</directory64>
+      <option> \Silent</option>
+      <option64> \Silent</option64>
+      <timing>5</timing>
+      <flags>0</flags>
+      <exitcode>0</exitcode>
+    </file>
+    <file num="20">
+      <name>IJPAT</name>
+      <if>4</if>
+      <directory>..\IJPAT\Setup.exe</directory>
+      <directory64>..\IJPAT\Setup.exe</directory64>
+      <option>"Software\Canon\CNMPA\AppInstaller" -SILENT_C  </option>
+      <option64>"Software\Canon\CNMPA\AppInstaller" -SILENT_C  </option64>
+      <timing>5</timing>
+      <flags>1</flags>
+      <exitcode>2</exitcode>
+    </file>
+  </file_details>
+</INSTAPP>
