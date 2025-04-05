@@ -22,9 +22,9 @@
             </div>
             @if (Auth::user()->name == $jual->penjual || Auth::user()->role == 'A')
             <div class="tw-flex">
-                <a href="{{ route('jual.edit', ['jual'=>$jual]) }}">
+                {{-- <a href="{{ route('jual.edit', ['jual'=>$jual]) }}">
                     <button class="btn btn-success btn-rounded btn-sm mx-3">Edit</button>
-                </a>
+                </a> --}}
                 <form method="POST" action="{{ route('jual.destroy', ['jual'=>$jual]) }}">
                     @method('delete')
                     @csrf

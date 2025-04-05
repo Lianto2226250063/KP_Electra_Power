@@ -44,7 +44,7 @@
                                                 <form method="POST" action="{{ route('beli.destroy', $item->id) }}">
                                                     @method('delete')
                                                     @csrf
-                                                    <button type="submit" class="btn btn-danger btn-rounded btn-sm show_confirm" data-toggle="tooltip" title="Delete" data-nama='{{ $item->jual->nama_makanan }}'>Batalkan Pesanan</button>
+                                                    <button type="submit" class="btn btn-danger btn-rounded btn-sm show_confirm" data-toggle="tooltip" title="Delete" data-nama='{{ $item->jual->nama }}'>Batalkan Pesanan</button>
                                                 </form>
                                             </div>
                                         </td>

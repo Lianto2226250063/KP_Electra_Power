@@ -46,7 +46,7 @@
     <div id="sub-navigation" class="navbar navbar-dark bg-dark !tw-flex tw-flex-wrap">
       <ul>
         <li><a href="{{route('beli.indexbeli')}}">Daftar Belimu</a></li>
-        <li><a href="{{route('beli.indexjual')}}">Daftar Jualmu</a></li>
+        <li><a href="{{route('jual.indexjual')}}">Daftar Jualmu</a></li>
         <li><a href="{{route('beli.indexpesan')}}">Daftar Pesanan</a></li>
       </ul>
 

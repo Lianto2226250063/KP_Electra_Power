@@ -46,7 +46,7 @@ class BeliController extends Controller
         // Simpan data ke tabel beli
         beli::create($validasi);
         // Redirect ke beli/index
-        return redirect()->route('beli.index')->with("success","Data beli berhasil disimpan");
+        return redirect()->route('beli.indexbeli')->with("success","Data beli berhasil disimpan");
     }
 
     /**
@@ -70,28 +70,28 @@ class BeliController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
-    {
-        $beli = beli::find($id);
-        return view("beli.edit")->with("beli",$beli);
-    }
+    // public function edit($id)
+    // {
+    //     $beli = beli::find($id);
+    //     return view("beli.edit")->with("beli",$beli);
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, beli $beli)
-    {
-        $validasi = $request->validate([
-            "catatan" => "required",
-            "durasi" => "required",
-            "alamat" => "required",
-            "jumlah"=> "required",
-            "jual_id"=> "required",
-            "nama"=> "required",
-        ]);
-        $beli->update($validasi);
-        return redirect()->route('beli.index')->with('success','Data beli berhasil diubah');
-    }
+    // public function update(Request $request, beli $beli)
+    // {
+    //     $validasi = $request->validate([
+    //         "catatan" => "required",
+    //         "durasi" => "required",
+    //         "alamat" => "required",
+    //         "jumlah"=> "required",
+    //         "jual_id"=> "required",
+    //         "nama"=> "required",
+    //     ]);
+    //     $beli->update($validasi);
+    //     return redirect()->route('beli.index')->with('success','Data beli berhasil diubah');
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -99,6 +99,6 @@ class BeliController extends Controller
     public function destroy($id)
     {
         $beli = beli::find($id)->delete();
-        return redirect()->route('beli.index')->with('success','Data beli berhasil dihapus.');
+        return redirect()->route('home')->with('success','Data beli berhasil dihapus.');
     }
 }
