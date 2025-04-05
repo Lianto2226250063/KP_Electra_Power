@@ -63,9 +63,8 @@ section
                   </div>
                   <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                     <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                      <h4 class="mb-4">We are more than just a Movie Site</h4>
-                      <p class="small mb-0">We gave you the best experience to search a movie that you like, We are the best amongs the best Movie Industry that gives you
-                        the most valid Description and rating within the Movies industry in the whole world..</p>
+                      <h4 class="mb-4">Selamat datang di Health Pack!</h4>
+                      <p class="small mb-0">Solusi catering makanan sehat untuk gaya hidup aktif dan seimbang! Kami hadir untuk kamu yang peduli dengan asupan harian tanpa harus repot memasak. Menu kami dibuat dengan bahan-bahan segar, tanpa pengawet, dan disusun oleh ahli gizi untuk memastikan kamu mendapatkan nutrisi terbaik setiap hari.</p>
                     </div>
                   </div>
                 </div>
