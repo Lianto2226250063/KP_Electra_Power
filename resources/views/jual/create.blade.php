@@ -58,7 +58,7 @@
                         <label for="" class="text-danger">{{$message}}</label>
                        @enderror
                     </div>
-
+                    <br>
                     <button type="submit" class="btn btn-outline-success btn-sm tw-m-3">Submit</button>
                     <a href="{{route('home')}}" class="btn btn-outline-danger btn-sm">Cancel</a>
                   </form>

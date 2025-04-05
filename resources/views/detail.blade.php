@@ -34,7 +34,7 @@
             @endif
             @if (Auth::user()->name != $jual->penjual)
             <div class="tw-flex">
-                <a href="{{ route('beli.create', ['jual'=>$jual]) }}">
+                <a href="{{ route('beli.create', $jual->id) }}">
                     <button class="btn btn-success btn-rounded btn-sm mx-3">Pesan</button>
                 </a>
             </div>

@@ -33,8 +33,9 @@ Route::get('/{jual}', [JualController::class, 'show'])->name('jual.show');
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(BeliController::class)->prefix('/beli')->name('beli.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create','create')->name('create');
+        Route::get('/belimu', 'indexbeli')->name('indexbeli');
+        Route::get('/pesanmu', 'indexpesan')->name('indexpesan');
+        Route::get('/create/{jual}','create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::patch('/update/{id}', 'update')->name('update');
@@ -44,6 +45,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     });
     Route::controller(JualController::class)->prefix('/jual')->name('jual.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/jualmu', 'indexjual')->name('indexjual');
         Route::get('/create','create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::get('/edit/{jual}', 'edit')->name('edit');

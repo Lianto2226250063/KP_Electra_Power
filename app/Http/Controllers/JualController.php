@@ -20,6 +20,11 @@ class JualController extends Controller
         }
         return view("home")->with("jual", $jual);
     }
+    public function indexjual()
+    {
+        $jual = jual::all();
+        return view("jual.indexjual")->with("jual", $jual);
+    }
 
     /**
      * Show the form for creating a new resource.

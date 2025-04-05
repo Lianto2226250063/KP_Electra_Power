@@ -13,18 +13,23 @@ class BeliController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function indexbeli()
     {
         $beli = beli::all();
-        return view("beli.index")->with("beli", $beli);
+        return view("beli.indexbeli")->with("beli", $beli);
+    }
+    public function indexpesan()
+    {
+        $beli = beli::all();
+        return view("beli.indexpesan")->with("beli", $beli);
     }
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($jual)
     {
-        $jual = jual::all();
-        return view('beli.create')->with('jual', $jual);
+        $jual = jual::findOrFail($jual); // Ambil satu data berdasarkan id
+        return view('beli.create', compact('jual'));
     }
 
     public function store(Request $request)
@@ -49,9 +54,17 @@ class BeliController extends Controller
      */
     public function show($id)
     {
-        $jual = jual::where('beli_id', $id)->get();
-        $beli = beli::find($id);
-        return view("beli.show")->with("jual", $jual)->with("beli", $beli);
+        $beli = Beli::with('jual')->findOrFail($id);
+
+        // Cek apakah nama pembeli sama dengan user yang login
+        if ($beli->nama !== Auth::user()->name) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
+        return view("beli.show", [
+            "beli" => $beli,
+            "jual" => $beli->jual
+        ]);
     }
 
     /**
@@ -66,7 +79,7 @@ class BeliController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, beli $beli)
     {
         $validasi = $request->validate([
             "catatan" => "required",
@@ -74,9 +87,9 @@ class BeliController extends Controller
             "alamat" => "required",
             "jumlah"=> "required",
             "jual_id"=> "required",
+            "nama"=> "required",
         ]);
-        $validasi['nama'] = Auth::user()->name;
-        beli::find($id)->update($validasi);
+        $beli->update($validasi);
         return redirect()->route('beli.index')->with('success','Data beli berhasil diubah');
     }
 
