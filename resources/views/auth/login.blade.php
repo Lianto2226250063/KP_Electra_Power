@@ -2,10 +2,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <style>
   .gradient-custom {
-/* fallback for old browsers */
-  background: rgb(122, 179, 76);
-  background: -webkit-linear-gradient(to right, #286316, #49a02f, #7ab34c, #8efa79);
-  background: linear-gradient(to right, #286316, #49a02f, #7ab34c, #8efa79)
+  /* fallback for old browsers */
+  background: #121766;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
   }
 </style>
 <section class="vh-100 gradient-custom">
@@ -18,7 +22,7 @@
               <div class="mb-md-5 mt-md-4 pb-5">
 
                 <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                <p class="text-white-50 mb-5">Please enter your login and password!</p>
+                <p class="text-white-50 mb-5">Please enter your email and password!</p>
 
                 <form method="POST" action="{{ route('login') }}">
                   @csrf

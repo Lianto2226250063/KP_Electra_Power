@@ -2,11 +2,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <style>
     .gradient-custom {
-    background: rgb(122, 179, 76);
-    background: -webkit-linear-gradient(to right, #286316, #49a02f, #7ab34c, #8efa79);
-    background: linear-gradient(to right, #286316, #49a02f, #7ab34c, #8efa79)
+    /* fallback for old browsers */
+    background: #121766;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
     }
-</style>
+  </style>
 <section class="vh-100 gradient-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -54,12 +59,6 @@
                     <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
                 </form>
                 </div>
-
-                <div>
-                <p class="mb-0">Already have an account? <a href="{{ route('login') }}" class="text-white-50 fw-bold">Log in</a>
-                </p>
-                </div>
-
             </div>
             </div>
         </div>

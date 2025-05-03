@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('belis', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->uuid("id");
             $table->primary('id');
-            $table->string('nama', 50);
-            $table->text('catatan');
-            $table->date('durasi');
-            $table->text('alamat');
-            $table->integer('jumlah');
-            $table->uuid('jual_id');
-            $table->foreign('jual_id')->references('id')->on('juals')->restrictOnDelete()->restrictOnUpdate();
+            $table->string('nomor', 50);
+            $table->string('kepada', 50);
+            $table->date('tanggal');
+            $table->string('lokasi', 50);
+            $table->string('pegawai', 55)->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('invoices');
     }
 };

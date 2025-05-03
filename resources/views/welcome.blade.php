@@ -4,13 +4,13 @@
 <style>
     .gradient-custom-2 {
 /* fallback for old browsers */
-background: #fccb90;
+background: #121766;
 
 /* Chrome 10-25, Safari 5.1-6 */
-background: -webkit-linear-gradient(to right, #286316, #49a02f, #7ab34c, #8efa79);
+background: -webkit-linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
 
 /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-background: linear-gradient(to right, #286316, #49a02f, #7ab34c, #8efa79);
+background: linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
 }
 
 @media (min-width: 768px) {
@@ -20,8 +20,8 @@ height: 100vh !important;
 }
 @media (min-width: 769px) {
 .gradient-custom-2 {
-  background: linear-gradient(to right, #286316, #49a02f, #7ab34c, #8efa79);
-    border: 2px solid #49a02f; /* match one of your gradient colors */
+  background: linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
+    border: 2px solid #1f22c7; /* match one of your gradient colors */
     color: white;
 }
 }
@@ -32,11 +32,13 @@ button {
 .card-body {
     width: 90%;
 }
-
+.card {
+  border: none !important;
+}
 
 section
  {
-  background-image: url('../images/bg.jpeg');
+  background-image: url('../images/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -48,23 +50,29 @@ section
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-xl-10">
-              <div class="card rounded-3 text-black">
+              <div class="card rounded-5 text-black" style="border: none;">
                 <div class="row g-0">
-                  <div class="col-lg-6 bg-dark">
-                    <div class="card-body p-md-5 mx-md-4 bg-dark">
+                  <div class="col-lg-6 bg-light">
+                    <div class="card-body p-md-5 mx-md-4 bg-light">
                       <div class="text-center">
-                        <img src="../images/HealthPackLogo.png"
-                          style="width: 300px;" alt="logo">
+                        <img src="../images/ElectraPower.png"
+                          style="width: 400px; height: 175px;" alt="logo">
                       </div>
-                      <a href="{{ route('register') }}">
-                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">START YOUR JOURNEY</button>
+                      <br><br>
+                      <a href="{{ route('login') }}">
+                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Login</button>
                     </a>
                     </div>
                   </div>
                   <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                     <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                      <h4 class="mb-4">Selamat datang di Health Pack!</h4>
-                      <p class="small mb-0">Solusi catering makanan sehat untuk gaya hidup aktif dan seimbang! Kami hadir untuk kamu yang peduli dengan asupan harian tanpa harus repot memasak. Menu kami dibuat dengan bahan-bahan segar, tanpa pengawet, dan disusun oleh ahli gizi untuk memastikan kamu mendapatkan nutrisi terbaik setiap hari.</p>
+                      <h4 class="mb-4">Selamat datang di Electra Power!</h4>
+                      <p class="small mb-0">PT Electra Power adalah suatu usaha yang bergerak di bidang jasa service electro motor, genset, reparasi suku cadang mekanik serta menyediakan aneka sparepart elektromotor seperti fan, terminal, cover, kawat tembaga supreme, snapring, bearing. Workshop ini didukung dengan peralatan kerja yang modern dan lengkap, yang memudahkan proses pengerjaan untuk mencapai efisiensi waktu dan biaya.
+                      </p>
+                      <br>
+                      <a href="">
+                        <button class="btn btn-primary btn-block fa-lg bg-dark mb-3" type="button">Hubungi kami Melalui Whatsapp</button>
+                      </a>
                     </div>
                   </div>
                 </div>
