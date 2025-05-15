@@ -30,17 +30,28 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        // dd($request);
+        $validate = $request->validate([
+            'name' => 'required|unique:users,name',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:6',
+            'role' => 'required',
+            'ttd' => 'required|image|mimes:jpeg,png,jpg,gif'
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // Rename file sesuai nama user
+        $file = $request->file('ttd');
+        $ext = $file->getClientOriginalExtension();
+        $filename = 'ttd_' . str_replace(' ', '_', strtolower($request->name)) . '.' . $ext;
+
+        // Simpan file ke storage/app/public/ttd
+        $filePath = $file->storeAs('ttd', $filename, 'public');
+
+        // Simpan user
+        $validate['password'] = bcrypt($request->password);
+        $validate['ttd'] = $filePath;
+        // dd($validate);
+        $user = User::create($validate);
 
         event(new Registered($user));
 

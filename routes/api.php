@@ -17,15 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+// Route::post('register', [AuthController::class, 'register']);
+// Route::post('login', [AuthController::class, 'login']);
 
-Route::get('invoice',[InvoiceController::class, 'index']);
-Route::post('invoice', [InvoiceController::class, 'store']);
-Route::post('invoice/{id}', [InvoiceController::class, 'update']);
-Route::delete('invoice/{id}', [InvoiceController::class, 'destroy']);
+// Route::get('invoice',[InvoiceController::class, 'index']);
+// Route::post('invoice', [InvoiceController::class, 'store']);
+// Route::post('invoice/{id}', [InvoiceController::class, 'update']);
+// Route::delete('invoice/{id}', [InvoiceController::class, 'destroy']);
 

@@ -20,13 +20,13 @@ class InvoiceController extends Controller
         } else {
             $invoice = Invoice::all();
         }
-        return view("home")->with("invoice", $invoice);
+        return view("invoice.index")->with("invoice", $invoice);
     }
 
     public function indexinvoice()
     {
         $invoice = Invoice::all();
-        return view("home")->with("invoice", $invoice);
+        return view("invoice.index")->with("invoice", $invoice);
     }
 
     /**
@@ -53,16 +53,13 @@ class InvoiceController extends Controller
             'harga_satuan' => 'required|array',
         ]);
 
-        // Ambil nama pengguna yang sedang login untuk kolom pegawai
-        $pegawai = Auth::user()->name;
-
         // Simpan data invoice
         $invoice = new Invoice([
             'nomor' => $validated['nomor'],
             'kepada' => $validated['kepada'],
             'tanggal' => $validated['tanggal'],
             'lokasi' => $validated['lokasi'],
-            'pegawai' => $pegawai,  // Menyimpan nama pengguna yang sedang login
+            'id_pegawai' => Auth::id(),  // Menyimpan nama pengguna yang sedang login
         ]);
         $invoice->save();
 
@@ -77,7 +74,7 @@ class InvoiceController extends Controller
         }
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('home')->with('success', 'Invoice berhasil ditambahkan.');
+        return redirect()->route('invoice.index')->with('success', 'Invoice berhasil ditambahkan.');
     }
 
     /**
@@ -118,8 +115,8 @@ class InvoiceController extends Controller
         $invoice->lokasi = $request->lokasi;
         $invoice->save();
 
-        // Redirect ke halaman home dengan pesan sukses
-        return redirect("home")->with("success", "Data invoice berhasil diubah.");
+        // Redirect ke halaman invoice.index dengan pesan sukses
+        return redirect("invoice.index")->with("success", "Data invoice berhasil diubah.");
     }
 
     /**
@@ -134,7 +131,7 @@ class InvoiceController extends Controller
         $invoice->delete();
 
         // Redirect dengan pesan sukses setelah dihapus
-        return redirect()->route('home')->with('success', 'Data invoice berhasil dihapus.');
+        return redirect()->route('invoice.index')->with('success', 'Data invoice berhasil dihapus.');
     }
 
     /**

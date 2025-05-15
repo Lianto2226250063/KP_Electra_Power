@@ -135,21 +135,23 @@
         </tfoot>
     </table>
 
-    <div class="note">
-        Terbilang: <em>{{ ucwords($terbilang) }} Rupiah</em>
-    </div>    
+        <div class="note">
+            Terbilang: <em>{{ ucwords($terbilang) }} Rupiah</em>
+        </div>    
 
-    <br><br>
+        <br><br>
 
-    <table>
+        <table>
         <tr>
             <td class="text-right" colspan="5">Hormat kami,</td>
         </tr>
         <tr>
-            <td colspan="5" style="height: 80px;"></td>
+            <td colspan="5" style="height: 100px;" class="text-right">
+                <img src="{{ asset('storage/' . $invoice->pegawai->ttd) }}" alt="TTD" style="height:80px;">
+            </td>
         </tr>
         <tr>
-            <td class="text-right" colspan="5"><strong>{{ $invoice->pegawai }}</strong></td>
+            <td class="text-right" colspan="5"><strong>{{ $invoice->pegawai->name }}</strong></td>
         </tr>
     </table>
 </div>

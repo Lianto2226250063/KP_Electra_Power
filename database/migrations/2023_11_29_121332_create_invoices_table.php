@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('nomor', 50);
             $table->string('kepada', 50);
             $table->date('tanggal');
-            $table->string('lokasi', 50);
-            $table->string('pegawai', 55)->nullable();
+            $table->string('lokasi', 50); 
+            $table->unsignedBigInteger('id_pegawai');
+            $table->foreign('id_pegawai')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

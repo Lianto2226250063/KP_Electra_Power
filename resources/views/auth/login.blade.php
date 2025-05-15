@@ -11,8 +11,15 @@
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
   }
+  .full-height-background {
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
 </style>
-<section class="vh-100 gradient-custom">
+<section class="full-height-background gradient-custom">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -28,8 +35,8 @@
                   @csrf
 
                 <div class="form-outline form-white mb-4">
-                  <label class="form-label" for="email">Email</label>
-                  <input type="email" name="email" class="form-control form-control-lg" />
+                  <label class="form-label" for="login">Email or Username</label>
+                  <input type="text" name="login" class="form-control form-control-lg" />
                 </div>
 
                 <div class="form-outline form-white mb-4">

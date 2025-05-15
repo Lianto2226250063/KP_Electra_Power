@@ -27,11 +27,14 @@ Route::get('/', function () {
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-Route::get('/home', [InvoiceController::class, 'index'])->name('home');
-Route::get('/{invoice}', [InvoiceController::class, 'show'])->name('invoice.show');
+Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('home');
+Route::get('/invoice/{invoice}', [InvoiceController::class, 'show'])->name('invoice.show');
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/dashboard', 'index')->name('dashboard');
+});
 
     Route::controller(InvoiceController::class)->prefix('/invoice')->name('invoice.')->group(function () {
-        Route::get('/', 'index')->name('index');
+        Route::get('/index', 'index')->name('index');
         Route::get('/invoicemu', 'indexinvoice')->name('indexinvoice');
         Route::get('/create','create')->name('create');
         Route::post('/store', 'store')->name('store');

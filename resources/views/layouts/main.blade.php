@@ -29,20 +29,21 @@
         <h1 class="text-xl font-bold text-gray-800"><img src={{asset("images/ElectraPower.png")}} width="200px" height="150px"></h1>
       </div>
       <nav class="p-4 space-y-2">
+        <a href="/dashboard" class="block px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
         <!-- Invoice -->
         <div class="relative">
           <button @click="openInvoice = !openInvoice" class="block w-full text-left px-4 py-2 rounded hover:bg-gray-200">
             Invoice
           </button>
           <div x-show="openInvoice" x-transition @click.away="openInvoice = false" class="ml-4 mt-1 space-y-1">
-            <a href="/home" class="block px-4 py-2 rounded hover:bg-gray-200">Index</a>
+            <a href="/invoice/index" class="block px-4 py-2 rounded hover:bg-gray-200">Index</a>
             <a href="/invoice/create" class="block px-4 py-2 rounded hover:bg-gray-200">Tambah Invoice</a>
             <a href="/" class="block px-4 py-2 rounded hover:bg-gray-200">Cari</a>
           </div>
         </div>
 
         @auth
-          @if (Auth::user()->role === 'M')
+          @if (Auth::user()->role === 'admin')
             <a href="{{ route('register') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Buat Akun</a>
           @endif
         @endauth
