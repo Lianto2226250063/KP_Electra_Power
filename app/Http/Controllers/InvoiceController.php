@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
@@ -14,13 +15,34 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        // Menambahkan pencarian berdasarkan nama invoice
-        if ($request->search) {
-            $invoice = Invoice::where('kepada', 'like', '%' . $request->search . '%')->get();
-        } else {
-            $invoice = Invoice::all();
+        $query = Invoice::with('pegawai');
+
+        // Filter pencarian
+        if ($request->has('search') && $request->search !== null) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nomor', 'like', '%' . $search . '%')
+                ->orWhere('kepada', 'like', '%' . $search . '%')
+                ->orWhereHas('pegawai', function ($q2) use ($search) {
+                    $q2->where('name', 'like', '%' . $search . '%');
+                });
+            });
         }
-        return view("invoice.index")->with("invoice", $invoice);
+
+        // Filter berdasarkan bulan
+        if ($request->has('bulan') && $request->bulan !== null) {
+            $query->whereMonth('tanggal', $request->bulan);
+        }
+
+        // Filter berdasarkan tahun
+        if ($request->has('tahun') && $request->tahun !== null) {
+            $query->whereYear('tanggal', $request->tahun);
+        }
+
+        // Ambil data per 10 baris per halaman
+        $invoice = $query->latest()->paginate(10)->withQueryString();
+
+        return view('invoice.index', compact('invoice'));
     }
 
     public function indexinvoice()
@@ -185,4 +207,22 @@ class InvoiceController extends Controller
 
         return trim($hasil);
     }
+
+    public function download($invoice)
+    {
+        $invoice = Invoice::with('items')->findOrFail($invoice);
+
+        $subtotal = 0;
+        foreach ($invoice->items as $item) {
+            $subtotal += $item->harga_satuan * $item->jumlah;
+        }
+        $total = $subtotal + ($subtotal * 0.11);
+        $terbilang = $this->terbilang($total);
+        $safeFileName = 'invoice-' . str_replace(['/', '\\'], '-', $invoice->nomor) . '.pdf';
+
+        $pdf = Pdf::loadView('invoice.print', compact('invoice', 'terbilang'));
+
+        return $pdf->download($safeFileName);
+    }
+
 }

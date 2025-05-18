@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'ttd',
         'role',
+        'status'
     ];
 
     /**
@@ -47,10 +48,10 @@ class User extends Authenticatable
     ];
 
     function isAdmin() : bool {
-        return Auth::user()->role == 'A';
+        return Auth::user()->role == 'Admin';
     }
 
     function isUser() : bool {
-        return Auth::user()->role == 'U';
+        return Auth::user()->role == 'User';
     }
 }

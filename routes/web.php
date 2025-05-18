@@ -28,7 +28,7 @@ Route::get('/', function () {
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('home');
-Route::get('/invoice/{invoice}', [InvoiceController::class, 'show'])->name('invoice.show');
+Route::get('/invoice/show/{invoice}', [InvoiceController::class, 'show'])->name('invoice.show');
 Route::controller(DashboardController::class)->group(function () {
     Route::get('/dashboard', 'index')->name('dashboard');
 });
@@ -42,11 +42,13 @@ Route::controller(DashboardController::class)->group(function () {
         Route::patch('/update/{invoice}', 'update')->name('update');
         Route::delete('/delete/{invoice}', 'destroy')->name('destroy');
         Route::get('/{invoice}/print', 'print')->name('print');
+        Route::get('/download/{id}', 'download')->name('download');
     });
     Route::controller(UserController::class)->prefix('/user')->name('user.')->group(function () {
-        Route::get('/', 'index')->name('index');
+        Route::get('/index', 'index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/store', 'store')->name('store');
+        Route::put('/toggle-status/{user}', 'toggleStatus')->name('toggleStatus');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::patch('/update/{id}', 'update')->name('update');
         Route::delete('/delete/{id}', 'destroy')->name('destroy');

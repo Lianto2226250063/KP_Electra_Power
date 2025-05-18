@@ -5,16 +5,16 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card" x-data="{ details: [{ keterangan: '', jumlah: '', harga_satuan: '' }] }">
-            <div class="card-body bg-dark rounded">
-                <h4 class="card-title text-white text-4xl text-center">Buat Invoice</h4>
-                <p class="card-description text-white text-xl">Masukkan data invoice</p>
+        <div x-data="{ details: [{ keterangan: '', jumlah: '', harga_satuan: '' }] }">
+            <div class="card-body rounded">
+                <h4 class="card-title text-4xl text-center">Buat Invoice</h4>
+                <p class="card-description text-xl">Masukkan data invoice</p>
                 <br>
                 <form class="forms-sample" method="POST" action="{{ route('invoice.store') }}" enctype="multipart/form-data">
                     @csrf
                     {{-- Input untuk tabel invoices --}}
                     <div class="form-group">
-                        <label for="nomor" class="text-white">Nomor Invoice</label>
+                        <label for="nomor">Nomor Invoice</label>
                         <input type="text" class="form-control" name="nomor" placeholder="Masukkan nomor invoice" required>
                         @error('nomor')
                             <label class="text-danger">{{ $message }}</label>
@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="kepada" class="text-white">Kepada</label>
+                        <label for="kepada">Kepada</label>
                         <input type="text" class="form-control" name="kepada" placeholder="Masukkan nama penerima" required>
                         @error('kepada')
                             <label class="text-danger">{{ $message }}</label>
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tanggal" class="text-white">Tanggal</label>
+                        <label for="tanggal">Tanggal</label>
                         <input type="date" class="form-control" name="tanggal" value="{{ now()->toDateString() }}" required>
                         @error('tanggal')
                             <label class="text-danger">{{ $message }}</label>
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="lokasi" class="text-white">Lokasi</label>
+                        <label for="lokasi">Lokasi</label>
                         <input type="text" class="form-control" name="lokasi" value="Palembang" required>
                         @error('lokasi')
                             <label class="text-danger">{{ $message }}</label>
@@ -46,11 +46,11 @@
                     </div>
 
                     <br>
-                    <h4 class="text-white text-xl">Detail Invoice</h4>
+                    <h4 class=" text-xl">Detail Invoice</h4>
 
                     {{-- Tabel untuk Detail Invoice --}}
                     <div class="table-responsive">
-                        <table class="table table-bordered text-white">
+                        <table class="table table-bordered ">
                             <thead>
                                 <tr>
                                     <th class="text-center">Keterangan</th>
@@ -82,8 +82,28 @@
 
                     <button type="button" @click="details.push({ keterangan: '', jumlah: '', harga_satuan: '' })" class="btn btn-outline-primary btn-sm tw-m-3">Tambah Detail</button>
                     <br><br>
-                    <button type="submit" class="btn btn-outline-success btn-sm tw-m-3">Submit</button>
-                    <a href="{{ route('home') }}" class="btn btn-outline-danger btn-sm">Cancel</a>
+                    <!-- Tombol Submit yang membuka modal -->
+                    <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Submit</button>
+                    <a href="/invoice/index" class="btn btn-outline-danger btn-sm">Cancel</a>
+
+                    <!-- Modal Konfirmasi -->
+                    <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header bg-warning">
+                            <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Submit</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                        </div>
+                        <div class="modal-body">
+                            Apakah Anda yakin ingin mengirim invoice ini?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-success">Ya, Submit</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 </form>
             </div>
         </div>

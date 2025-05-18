@@ -74,13 +74,26 @@
     </style>
 </head>
 <body>
+@php
+    $isPdf = request()->is('invoice/print/*') || request()->is('invoice/download/*');
+
+    $logoSrc = $isPdf 
+        ? public_path('images/ElectraPower.png') 
+        : asset('images/ElectraPower.png');
+
+    $ttdSrc = $isPdf 
+        ? public_path('storage/' . $invoice->pegawai->ttd)
+        : asset('storage/' . $invoice->pegawai->ttd);
+@endphp
+@if (!$isPdf)
 <div class="no-print" style="text-align: right; margin-bottom: 20px;">
-    <a href="{{ route('home') }}" style="padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; margin-right: 10px;">Home</a>
+    <a href="{{ route('dashboard') }}" style="padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; margin-right: 10px;">Home</a>
     <button onclick="window.print()" style="padding: 10px 20px; background-color: #28a745; color: #fff; border: none; border-radius: 5px;">Print</button>
 </div>
+@endif
 <div class="invoice-box">
-    <img src="{{ asset('images/ElectraPower.png') }}" class="logo" alt="Logo">
 
+    <img src="{{ $logoSrc }}" class="logo" alt="Logo">
     <div class="heading">INVOICE</div>
 
     <table>
@@ -143,11 +156,11 @@
 
         <table>
         <tr>
-            <td class="text-right" colspan="5">Hormat kami,</td>
+            <td class="text-right " colspan="5"><div style="padding-right: 20px">Hormat kami,</div></td>
         </tr>
         <tr>
-            <td colspan="5" style="height: 100px;" class="text-right">
-                <img src="{{ asset('storage/' . $invoice->pegawai->ttd) }}" alt="TTD" style="height:80px;">
+            <td colspan="5" class="text-right">
+                <img src="{{ $ttdSrc }}" alt="TTD" style="height:100px; width:150px;">
             </td>
         </tr>
         <tr>

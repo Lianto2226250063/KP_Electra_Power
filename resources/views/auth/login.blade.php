@@ -21,42 +21,53 @@
 </style>
 <section class="full-height-background gradient-custom">
     <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card bg-dark text-white" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
 
-              <div class="mb-md-5 mt-md-4 pb-5">
+                        <div class="mb-md-5 mt-md-4 pb-5">
 
-                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                <p class="text-white-50 mb-5">Please enter your email and password!</p>
+                            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                            <p class="text-white-50 mb-4">Please enter your email and password!</p>
 
-                <form method="POST" action="{{ route('login') }}">
-                  @csrf
+                            <!-- ALERT ERROR UMUM -->
+                            @if ($errors->any())
+                                <div class="alert alert-danger text-start">
+                                    @foreach ($errors->all() as $error)
+                                        <div>{{ $error }}</div>
+                                    @endforeach
+                                </div>
+                            @endif
 
-                <div class="form-outline form-white mb-4">
-                  <label class="form-label" for="login">Email or Username</label>
-                  <input type="text" name="login" class="form-control form-control-lg" />
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <div class="form-outline form-white mb-4 text-start">
+                                    <label class="form-label" for="login">Email or Username</label>
+                                    <input type="text" name="login" id="login"
+                                        class="form-control form-control-lg @error('login') is-invalid @enderror"
+                                        value="{{ old('login') }}" />
+                                    @error('login')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="form-outline form-white mb-4 text-start">
+                                    <label class="form-label" for="password">Password</label>
+                                    <input type="password" name="password" id="password"
+                                        class="form-control form-control-lg @error('password') is-invalid @enderror" />
+                                    @error('password')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-outline form-white mb-4">
-                  <label class="form-label" for="password">Password</label>
-                  <input type="password" name="password" class="form-control form-control-lg" />
-                </div>
-
-                <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-
-              </div>
-                </form>
-
-              <div>
-                <p class="mb-0">Don't have an account? <a href="{{ route('register') }}" class="text-white-50 fw-bold">Sign Up</a>
-                </p>
-              </div>
-
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>

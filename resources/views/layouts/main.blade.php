@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
@@ -31,22 +31,10 @@
       <nav class="p-4 space-y-2">
         <a href="/dashboard" class="block px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
         <!-- Invoice -->
-        <div class="relative">
-          <button @click="openInvoice = !openInvoice" class="block w-full text-left px-4 py-2 rounded hover:bg-gray-200">
-            Invoice
-          </button>
-          <div x-show="openInvoice" x-transition @click.away="openInvoice = false" class="ml-4 mt-1 space-y-1">
-            <a href="/invoice/index" class="block px-4 py-2 rounded hover:bg-gray-200">Index</a>
-            <a href="/invoice/create" class="block px-4 py-2 rounded hover:bg-gray-200">Tambah Invoice</a>
-            <a href="/" class="block px-4 py-2 rounded hover:bg-gray-200">Cari</a>
-          </div>
-        </div>
-
-        @auth
-          @if (Auth::user()->role === 'admin')
-            <a href="{{ route('register') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Buat Akun</a>
-          @endif
-        @endauth
+        <a href="/invoice/index" class="block px-4 py-2 rounded hover:bg-gray-200">Invoice</a>    
+        
+        <a href="/user/index" class="block px-4 py-2 rounded hover:bg-gray-200">Pegawai</a>
+        
         <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="block w-full px-4 py-2 text-left rounded hover:bg-gray-200">
@@ -66,6 +54,8 @@
         <div id="content">
             @yield('content')
         </div>
-        @stack('scripts')
+            @stack('scripts')
+      </div>
+    </main>
   </body>
 </html>
