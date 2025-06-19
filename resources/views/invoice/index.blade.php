@@ -63,7 +63,7 @@
               @foreach ($invoice as $item)
                     <tr>                        
                         <td>{{ $item->nomor ?? '-' }}</td>
-                        <td>{{ $item->lokasi }}, {{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') : '-' }}</td>
+                        <td>{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') : '-' }}</td>
                         <td>{{ $item->kepada ?? '-' }}</td>
                         {{-- <td>{{ $item->pegawai->name ?? '-' }}</td> --}}
                         <td class="text-center">

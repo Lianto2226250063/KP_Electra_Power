@@ -13,11 +13,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         \DB::table('users')->insert([
-            'name' => 'Electra Power',
+            'name' => 'admin',
             'role' => 'admin',
-            'email' => 'electrapower@gmail.com',
-            'password' => \Hash::make('electrapower123'),
-            'ttd' => 'ttd/ttd_electra_power.png',
+            'email' => 'admin@gmail.com',
+            'password' => \Hash::make('admin'),
+            'ttd' => 'ttd/ttd_admin.png',
         ]);
     }
 }

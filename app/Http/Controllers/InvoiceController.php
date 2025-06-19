@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use Illuminate\Http\Request;
@@ -56,7 +57,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('invoice.create');
+        $barangs = \App\Models\Barang::all();
+        return view('invoice.create', compact('barangs'));
     }
 
     /**
@@ -69,27 +71,41 @@ class InvoiceController extends Controller
             'nomor' => 'required|string|max:50',
             'kepada' => 'required|string|max:50',
             'tanggal' => 'required|date',
-            'lokasi' => 'required|string|max:50',
+            // 'lokasi' => 'required|string|max:50',
             'keterangan' => 'required|array',
             'jumlah' => 'required|array',
             'harga_satuan' => 'required|array',
         ]);
 
+        $rawNomor = trim($validated['nomor']);
+        $tanggal = \Carbon\Carbon::parse($validated['tanggal']);
+        $bulan = $tanggal->format('m');
+        $tahun = $tanggal->format('y');
+        $finalNomor = $rawNomor . '/' . $bulan . '-' . $tahun;
+
         // Simpan data invoice
         $invoice = new Invoice([
-            'nomor' => $validated['nomor'],
-            'kepada' => $validated['kepada'],
+            'nomor' => $finalNomor,
+            'kepada' => trim($validated['kepada']),
             'tanggal' => $validated['tanggal'],
-            'lokasi' => $validated['lokasi'],
+            // 'lokasi' => $validated['lokasi'],
             'id_pegawai' => Auth::id(),  // Menyimpan nama pengguna yang sedang login
         ]);
         $invoice->save();
 
         // Simpan detail invoice
         foreach ($validated['keterangan'] as $index => $keterangan) {
+            $barang = Barang::where('nama', trim($keterangan))->first();
+            if(!$barang){
+                Barang::create([
+                    'nama' => trim($keterangan),
+                    'harga' => $validated['harga_satuan'][$index],
+                ]);
+            }
+
             InvoiceDetail::create([
                 'id_invoice' => $invoice->id,
-                'keterangan' => $keterangan,
+                'keterangan' => trim($keterangan),
                 'jumlah' => $validated['jumlah'][$index],
                 'harga_satuan' => $validated['harga_satuan'][$index],
             ]);
@@ -114,7 +130,8 @@ class InvoiceController extends Controller
     public function edit(Invoice $invoice)
     {
         $invoice = Invoice::with('items')->findOrFail($invoice->id);
-        return view('invoice.edit', compact('invoice'));
+        $barangs = \App\Models\Barang::all();
+        return view('invoice.edit', compact('invoice', 'barangs'));
     }
 
     /**
@@ -122,24 +139,72 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        // Validasi input untuk pembaruan invoice
-        $validasi = $request->validate([
-            'nomor' => 'required',
-            'kepada' => 'required',
-            'tanggal' => 'required',
-            'lokasi' => 'required',
+        // Validasi input
+        $validated = $request->validate([
+            'kepada' => 'required|string|max:50',
+            'tanggal' => 'required|date',
+            'keterangan' => 'required|array',
+            'jumlah' => 'required|array',
+            'harga_satuan' => 'required|array',
+            'detailId' => 'array',
         ]);
 
-        // Pembaruan data invoice
-        $invoice->nomor = $request->nomor;
-        $invoice->kepada = $request->kepada;
-        $invoice->tanggal = $request->tanggal;
-        $invoice->lokasi = $request->lokasi;
-        $invoice->save();
+        // Update invoice utama
+        $invoice->update([
+            'kepada' => trim($request->kepada),
+            'tanggal' => $request->tanggal,
+        ]);
 
-        // Redirect ke halaman invoice.index dengan pesan sukses
-        return redirect("invoice.index")->with("success", "Data invoice berhasil diubah.");
+        // Ambil semua ID detail lama dari DB
+        $existingDetailIds = $invoice->items()->pluck('id')->toArray();
+        $formDetailIds = $request->detailId ?? [];
+
+        // Siapkan array untuk tracking ID yang masih dipakai
+        $processedIds = [];
+
+        // Simpan/Update setiap detail yang dikirim dari form
+        for ($i = 0; $i < count($request->keterangan); $i++) {
+            $detailId = $formDetailIds[$i] ?? null;
+            $keterangan = trim($validated['keterangan'][$i]);
+            $jumlah = $validated['jumlah'][$i];
+            $harga = $validated['harga_satuan'][$i];
+
+            // Tambahkan barang jika belum ada
+            $barang = Barang::firstOrCreate(
+                ['nama' => $keterangan],
+                ['harga' => $harga]
+            );
+
+            if ($detailId) {
+                // Update detail yang ada
+                $detail = InvoiceDetail::find($detailId);
+                if ($detail) {
+                    $detail->update([
+                        'keterangan' => $keterangan,
+                        'jumlah' => $jumlah,
+                        'harga_satuan' => $harga,
+                    ]);
+                    $processedIds[] = $detailId;
+                }
+            } else {
+                // Tambah detail baru
+                $newDetail = InvoiceDetail::create([
+                    'id_invoice' => $invoice->id,
+                    'keterangan' => $keterangan,
+                    'jumlah' => $jumlah,
+                    'harga_satuan' => $harga,
+                ]);
+                $processedIds[] = $newDetail->id;
+            }
+        }
+
+        // Hapus detail yang tidak ada dalam form (dihapus user)
+        $toDelete = array_diff($existingDetailIds, $processedIds);
+        InvoiceDetail::destroy($toDelete);
+
+        return redirect()->route('invoice.index')->with('success', 'Invoice berhasil diperbarui.');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -147,7 +212,7 @@ class InvoiceController extends Controller
     public function destroy(Invoice $invoice)
     {
         // Otorisasi sebelum menghapus
-        $this->authorize('viewAny', Invoice::class);
+        // $this->authorize('viewAny', Invoice::class);
 
         // Menghapus invoice beserta detailnya
         $invoice->delete();

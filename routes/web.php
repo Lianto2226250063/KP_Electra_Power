@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
@@ -43,6 +44,15 @@ Route::controller(DashboardController::class)->group(function () {
         Route::delete('/delete/{invoice}', 'destroy')->name('destroy');
         Route::get('/{invoice}/print', 'print')->name('print');
         Route::get('/download/{id}', 'download')->name('download');
+    });
+    Route::controller(BarangController::class)->prefix('/barang')->name('barang.')->group(function () {
+        Route::get('/index', 'index')->name('index');
+        Route::get('/barangmu', 'indexbarang')->name('indexbarang');
+        Route::get('/create','create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{barang}', 'edit')->name('edit');
+        Route::patch('/update/{barang}', 'update')->name('update');
+        Route::delete('/delete/{barang}', 'destroy')->name('destroy');
     });
     Route::controller(UserController::class)->prefix('/user')->name('user.')->group(function () {
         Route::get('/index', 'index')->name('index');

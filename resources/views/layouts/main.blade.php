@@ -9,6 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/select2.css') }}">
+    <script src="{{ asset('js/jquery.min.js')}}"></script>
+
+    <script src="{{ asset('js/datatables.js') }}"></script>
+    <script src="{{ asset('js/select2.js') }}"></script>
     <style>
       .gradient-custom-2 {
         /* fallback for old browsers */
@@ -31,7 +36,9 @@
       <nav class="p-4 space-y-2">
         <a href="/dashboard" class="block px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
         <!-- Invoice -->
-        <a href="/invoice/index" class="block px-4 py-2 rounded hover:bg-gray-200">Invoice</a>    
+        <a href="/invoice/index" class="block px-4 py-2 rounded hover:bg-gray-200">Invoice</a>
+        
+        <a href="/barang/index" class="block px-4 py-2 rounded hover:bg-gray-200">Barang & Jasa</a>    
         
         <a href="/user/index" class="block px-4 py-2 rounded hover:bg-gray-200">Pegawai</a>
         

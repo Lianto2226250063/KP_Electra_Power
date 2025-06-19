@@ -5,17 +5,20 @@
 @section('content')
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
-        <div x-data="{ details: [{ keterangan: '', jumlah: '', harga_satuan: '' }] }">
+        <div x-data="invoiceForm()">
             <div class="card-body rounded">
                 <h4 class="card-title text-4xl text-center">Buat Invoice</h4>
                 <p class="card-description text-xl">Masukkan data invoice</p>
                 <br>
-                <form class="forms-sample" method="POST" action="{{ route('invoice.store') }}" enctype="multipart/form-data">
+                <form class="forms-sample" method="POST" action="{{ route('invoice.store') }}">
                     @csrf
                     {{-- Input untuk tabel invoices --}}
                     <div class="form-group">
                         <label for="nomor">Nomor Invoice</label>
-                        <input type="text" class="form-control" name="nomor" placeholder="Masukkan nomor invoice" required>
+                        <div class="input-group">
+                            <input type="text" id="nomor" class="form-control" name="nomor" placeholder="Masukkan nomor invoice" required>
+                            <span class="input-group-text bg-light" id="bulanTahunDisplay">/--/--</span>
+                        </div>
                         @error('nomor')
                             <label class="text-danger">{{ $message }}</label>
                         @enderror
@@ -37,20 +40,12 @@
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label for="lokasi">Lokasi</label>
-                        <input type="text" class="form-control" name="lokasi" value="Palembang" required>
-                        @error('lokasi')
-                            <label class="text-danger">{{ $message }}</label>
-                        @enderror
-                    </div>
-
                     <br>
-                    <h4 class=" text-xl">Detail Invoice</h4>
+                    <h4 class="text-xl">Detail Invoice</h4>
 
                     {{-- Tabel untuk Detail Invoice --}}
                     <div class="table-responsive">
-                        <table class="table table-bordered ">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th class="text-center">Keterangan</th>
@@ -63,13 +58,25 @@
                                 <template x-for="(detail, index) in details" :key="index">
                                     <tr>
                                         <td>
-                                            <textarea class="form-control" x-model="details[index].keterangan" name="keterangan[]" placeholder="Masukkan keterangan barang/jasa" required></textarea>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   name="keterangan[]"
+                                                   list="daftarBarang"
+                                                   x-model="detail.keterangan"
+                                                   @input="updateHarga(index)"
+                                                   placeholder="Ketik atau pilih barang/jasa"
+                                                   required>
+                                            <datalist id="daftarBarang">
+                                                @foreach($barangs as $barang)
+                                                    <option value="{{ $barang->nama }}">
+                                                @endforeach
+                                            </datalist>
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" x-model="details[index].jumlah" name="jumlah[]" placeholder="Masukkan jumlah" required>
+                                            <input type="number" class="form-control" x-model="detail.jumlah" name="jumlah[]" placeholder="Jumlah" required>
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" x-model="details[index].harga_satuan" name="harga_satuan[]" placeholder="Masukkan harga satuan" required>
+                                            <input type="number" class="form-control" x-model="detail.harga_satuan" name="harga_satuan[]" placeholder="Harga Satuan" required>
                                         </td>
                                         <td class="text-center">
                                             <button type="button" @click="details.splice(index, 1)" class="btn btn-outline-danger btn-sm">Hapus</button>
@@ -80,33 +87,50 @@
                         </table>
                     </div>
 
-                    <button type="button" @click="details.push({ keterangan: '', jumlah: '', harga_satuan: '' })" class="btn btn-outline-primary btn-sm tw-m-3">Tambah Detail</button>
+                    <button type="button" @click="details.push({ keterangan: '', jumlah: '', harga_satuan: '' })" class="btn btn-outline-primary btn-sm mt-2">Tambah Detail</button>
                     <br><br>
-                    <!-- Tombol Submit yang membuka modal -->
-                    <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Submit</button>
-                    <a href="/invoice/index" class="btn btn-outline-danger btn-sm">Cancel</a>
 
-                    <!-- Modal Konfirmasi -->
-                    <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-header bg-warning">
-                            <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Submit</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                        </div>
-                        <div class="modal-body">
-                            Apakah Anda yakin ingin mengirim invoice ini?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-success">Ya, Submit</button>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
+                    <!-- Tombol Submit dan Cancel -->
+                    <button type="submit" class="btn btn-outline-success btn-sm me-2">Submit</button>
+                    <a href="{{ route('invoice.index') }}" class="btn btn-outline-danger btn-sm">Cancel</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function invoiceForm() {
+        return {
+            details: [{ keterangan: '', jumlah: '', harga_satuan: '' }],
+            barangMap: @json($barangs->pluck('harga', 'nama')),
+            updateHarga(index) {
+                const nama = this.details[index].keterangan;
+                this.details[index].harga_satuan = this.barangMap[nama] ?? '';
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tanggalInput = document.querySelector('input[name="tanggal"]');
+        const bulanTahunDisplay = document.getElementById('bulanTahunDisplay');
+
+        function updateBulanTahun() {
+            const value = tanggalInput.value;
+            if (value) {
+                const date = new Date(value);
+                const bulan = String(date.getMonth() + 1).padStart(2, '0');
+                const tahun = String(date.getFullYear()).slice(-2);
+                bulanTahunDisplay.textContent = '/' + bulan + '-' + tahun;
+            } else {
+                bulanTahunDisplay.textContent = '/--/--';
+            }
+        }
+
+        tanggalInput.addEventListener('input', updateBulanTahun);
+        updateBulanTahun();
+    });
+</script>
+@endpush
