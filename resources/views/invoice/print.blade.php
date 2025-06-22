@@ -99,7 +99,7 @@
     <table>
         <tr>
             <td>Nomor: <strong>{{ $invoice->nomor }}</strong></td>
-            <td class="text-right">Palembang, {{ \Carbon\Carbon::parse($invoice->tanggal)->translatedFormat('d F Y') }}</td>
+            <td class="text-right">Palembang, {{ \Carbon\Carbon::parse($invoice->tanggal)->locale('id')->translatedFormat('d F Y') }}</td>
         </tr>
         <tr>
             <td>Kepada: <strong>{{ $invoice->kepada }}</strong></td>
@@ -119,7 +119,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($invoice->items as $index => $item)
+            @foreach ($invoice->details as $index => $item)
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ $item->keterangan }}</td>
@@ -132,19 +132,34 @@
                 @endphp
             @endforeach
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="4" class="text-right"><strong>SUB TOTAL</strong></td>
-                <td class="text-right">Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
-            </tr>
-            <tr>
-                <td colspan="4" class="text-right"><strong>PPN 11%</strong></td>
-                <td class="text-right">Rp {{ number_format($subtotal * 0.11, 0, ',', '.') }}</td>
-            </tr>
-            <tr>
-                <td colspan="4" class="text-right"><strong>Total</strong></td>
-                <td class="text-right"><strong>Rp {{ number_format($subtotal + $subtotal * 0.11, 0, ',', '.') }}</strong></td>
-            </tr>
+        <tfoot> 
+            @php
+                $hasPPN = str_contains(strtoupper($invoice->nomor), 'EPI');
+            @endphp
+
+            @if ($hasPPN)
+            @php
+                $ppn = $subtotal * 0.11;
+                $total = $subtotal + $ppn;
+            @endphp
+                <tr>
+                    <td colspan="4" class="text-right"><strong>SUB TOTAL</strong></td>
+                    <td class="text-right">Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-right"><strong>PPN 11%</strong></td>
+                    <td class="text-right">Rp {{ number_format($ppn, 0, ',', '.') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-right"><strong>Total</strong></td>
+                    <td class="text-right"><strong>Rp {{ number_format($total, 0, ',', '.') }}</strong></td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="4" class="text-right"><strong>Total</strong></td>
+                    <td class="text-right"><strong>Rp {{ number_format($subtotal, 0, ',', '.') }}</strong></td>
+                </tr>
+            @endif
         </tfoot>
     </table>
 

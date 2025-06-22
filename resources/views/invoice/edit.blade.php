@@ -15,7 +15,7 @@
                     'harga_satuan' => old('harga_satuan')[$i] ?? '',
                 ];
             }) 
-            : ($invoice->items ?? collect())->map(function ($item) {
+            : ($invoice->details ?? collect())->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'keterangan' => $item->keterangan,
@@ -38,8 +38,7 @@
                     <div class="form-group">
                         <label for="nomor">Nomor Invoice</label>
                         <div class="input-group">
-                            <input type="text" id="nomor" class="form-control" name="nomor" value="{{ old('nomor', substr($invoice->nomor, 0, -6)) }}" required readonly>
-                            <span class="input-group-text bg-light" id="bulanTahunDisplay">/--/--</span>
+                            <input type="text" id="nomor" class="form-control" name="nomor" value="{{ old('nomor', $invoice->nomor) }}" style="background-color: #f0f0f0;" required readonly>
                         </div>
                         @error('nomor')
                             <label class="text-danger">{{ $message }}</label>
@@ -54,13 +53,13 @@
                         @enderror
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="tanggal">Tanggal</label>
-                        <input type="date" class="form-control" name="tanggal" value="{{ old('tanggal', $invoice->tanggal) }}" required>
+                        <input type="date" class="form-control" name="tanggal" value="{{ old('tanggal', $invoice->tanggal) }}" required readonly>
                         @error('tanggal')
                             <label class="text-danger">{{ $message }}</label>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <br>
                     <h4 class="text-xl">Detail Invoice</h4>
@@ -132,24 +131,25 @@
         };
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const tanggalInput = document.querySelector('input[name="tanggal"]');
-        const bulanTahunDisplay = document.getElementById('bulanTahunDisplay');
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     const tanggalInput = document.querySelector('input[name="tanggal"]');
+    //     const bulanTahunDisplay = document.getElementById('bulanTahunDisplay');
 
-        function updateBulanTahun() {
-            const value = tanggalInput.value;
-            if (value) {
-                const date = new Date(value);
-                const bulan = String(date.getMonth() + 1).padStart(2, '0');
-                const tahun = String(date.getFullYear()).slice(-2);
-                bulanTahunDisplay.textContent = '/' + bulan + '-' + tahun;
-            } else {
-                bulanTahunDisplay.textContent = '/--/--';
-            }
-        }
+    //     function updateBulanTahun() {
+    //         const value = tanggalInput.value;
+    //         if (value) {
+    //             const date = new Date(value);
+    //             const bulan = String(date.getMonth() + 1).padStart(2, '0');
+    //             const tahun = String(date.getFullYear()).slice(-2);
+    //             bulanTahunDisplay.textContent = '/' + bulan + '-' + tahun;
+    //         } else {
+    //             bulanTahunDisplay.textContent = '/--/--';
+    //         }
+    //     }
 
-        tanggalInput.addEventListener('input', updateBulanTahun);
-        updateBulanTahun();
-    });
+    //     tanggalInput.addEventListener('input', updateBulanTahun);
+    //     updateBulanTahun();
+    // });
 </script>
+
 @endpush

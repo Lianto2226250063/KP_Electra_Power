@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class invoice extends Model
+class Invoice extends Model
 {
     use HasFactory, HasUuids;
 
@@ -14,14 +14,15 @@ class invoice extends Model
 
     protected $fillable = ['nomor', 'kepada', 'tanggal', 'lokasi', 'id_pegawai'];
 
-    public function items()
+    // Relasi ke detail invoice (invoice_details)
+    public function details()
     {
-        return $this->hasMany(InvoiceDetail::class, 'id_invoice'); // pastikan nama model dan foreign key-nya sesuai
+        return $this->hasMany(InvoiceDetail::class, 'id_invoice');
     }
 
+    // Relasi ke pegawai (users)
     public function pegawai()
     {
         return $this->belongsTo(User::class, 'id_pegawai');
     }
-
 }

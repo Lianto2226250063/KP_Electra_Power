@@ -12,18 +12,31 @@
                 <br>
                 <form class="forms-sample" method="POST" action="{{ route('invoice.store') }}">
                     @csrf
-                    {{-- Input untuk tabel invoices --}}
+
+                    {{-- Tipe Invoice --}}
+                    <div class="form-group">
+                        <label for="tipe">Tipe Invoice</label>
+                        <select class="form-control" name="tipe" x-model="tipe" required>
+                            <option value="">-- Pilih Tipe --</option>
+                            <option value="EP">EP</option>
+                            <option value="EPI">EPI</option>
+                        </select>
+                    </div>
+
+                    {{-- Nomor Invoice --}}
                     <div class="form-group">
                         <label for="nomor">Nomor Invoice</label>
                         <div class="input-group">
-                            <input type="text" id="nomor" class="form-control" name="nomor" placeholder="Masukkan nomor invoice" required>
-                            <span class="input-group-text bg-light" id="bulanTahunDisplay">/--/--</span>
+                            <input type="text" id="nomor" class="form-control" name="nomor" x-model="nomorManual" placeholder="Masukkan nomor invoice (misal: 0012)" required>
+                            <span class="input-group-text bg-light" x-text="kodeInvoice()">/--/--</span>
                         </div>
+                        <input type="hidden" name="kode_suffix" :value="kodeInvoice()">
                         @error('nomor')
                             <label class="text-danger">{{ $message }}</label>
                         @enderror
                     </div>
 
+                    {{-- Kepada --}}
                     <div class="form-group">
                         <label for="kepada">Kepada</label>
                         <input type="text" class="form-control" name="kepada" placeholder="Masukkan nama penerima" required>
@@ -32,9 +45,10 @@
                         @enderror
                     </div>
 
+                    {{-- Tanggal --}}
                     <div class="form-group">
                         <label for="tanggal">Tanggal</label>
-                        <input type="date" class="form-control" name="tanggal" value="{{ now()->toDateString() }}" required>
+                        <input type="date" class="form-control" name="tanggal" x-model="tanggal" required>
                         @error('tanggal')
                             <label class="text-danger">{{ $message }}</label>
                         @enderror
@@ -43,7 +57,7 @@
                     <br>
                     <h4 class="text-xl">Detail Invoice</h4>
 
-                    {{-- Tabel untuk Detail Invoice --}}
+                    {{-- Tabel Detail Invoice --}}
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -59,16 +73,16 @@
                                     <tr>
                                         <td>
                                             <input type="text"
-                                                   class="form-control"
-                                                   name="keterangan[]"
-                                                   list="daftarBarang"
-                                                   x-model="detail.keterangan"
-                                                   @input="updateHarga(index)"
-                                                   placeholder="Ketik atau pilih barang/jasa"
-                                                   required>
+                                                class="form-control"
+                                                name="keterangan[]"
+                                                list="daftarBarang"
+                                                x-model="detail.keterangan"
+                                                @input="updateHarga(index)"
+                                                placeholder="Ketik atau pilih barang/jasa"
+                                                required>
                                             <datalist id="daftarBarang">
                                                 @foreach($barangs as $barang)
-                                                    <option value="{{ $barang->nama }}">
+                                                    <option value="{{ $barang->nama }}"></option>
                                                 @endforeach
                                             </datalist>
                                         </td>
@@ -90,7 +104,7 @@
                     <button type="button" @click="details.push({ keterangan: '', jumlah: '', harga_satuan: '' })" class="btn btn-outline-primary btn-sm mt-2">Tambah Detail</button>
                     <br><br>
 
-                    <!-- Tombol Submit dan Cancel -->
+                    {{-- Tombol Submit --}}
                     <button type="submit" class="btn btn-outline-success btn-sm me-2">Submit</button>
                     <a href="{{ route('invoice.index') }}" class="btn btn-outline-danger btn-sm">Cancel</a>
                 </form>
@@ -104,33 +118,25 @@
 <script>
     function invoiceForm() {
         return {
+            tipe: '',
+            tanggal: '{{ now()->toDateString() }}',
+            nomorManual: '',
             details: [{ keterangan: '', jumlah: '', harga_satuan: '' }],
             barangMap: @json($barangs->pluck('harga', 'nama')),
+
             updateHarga(index) {
                 const nama = this.details[index].keterangan;
                 this.details[index].harga_satuan = this.barangMap[nama] ?? '';
-            }
-        }
-    }
+            },
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const tanggalInput = document.querySelector('input[name="tanggal"]');
-        const bulanTahunDisplay = document.getElementById('bulanTahunDisplay');
-
-        function updateBulanTahun() {
-            const value = tanggalInput.value;
-            if (value) {
-                const date = new Date(value);
+            kodeInvoice() {
+                if (!this.tipe || !this.tanggal) return '/--/--';
+                const date = new Date(this.tanggal);
                 const bulan = String(date.getMonth() + 1).padStart(2, '0');
                 const tahun = String(date.getFullYear()).slice(-2);
-                bulanTahunDisplay.textContent = '/' + bulan + '-' + tahun;
-            } else {
-                bulanTahunDisplay.textContent = '/--/--';
+                return `/${this.tipe}/INV/${bulan}-${tahun}`;
             }
-        }
-
-        tanggalInput.addEventListener('input', updateBulanTahun);
-        updateBulanTahun();
-    });
+        };
+    }
 </script>
 @endpush

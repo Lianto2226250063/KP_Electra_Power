@@ -16,10 +16,10 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Invoice::with('pegawai');
+        $query = Invoice::with(['pegawai', 'details']); // Memuat pegawai & detail invoice sekaligus
 
         // Filter pencarian
-        if ($request->has('search') && $request->search !== null) {
+        if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('nomor', 'like', '%' . $search . '%')
@@ -31,16 +31,16 @@ class InvoiceController extends Controller
         }
 
         // Filter berdasarkan bulan
-        if ($request->has('bulan') && $request->bulan !== null) {
+        if ($request->filled('bulan')) {
             $query->whereMonth('tanggal', $request->bulan);
         }
 
         // Filter berdasarkan tahun
-        if ($request->has('tahun') && $request->tahun !== null) {
+        if ($request->filled('tahun')) {
             $query->whereYear('tanggal', $request->tahun);
         }
 
-        // Ambil data per 10 baris per halaman
+        // Ambil data terbaru dengan pagination
         $invoice = $query->latest()->paginate(10)->withQueryString();
 
         return view('invoice.index', compact('invoice'));
@@ -69,6 +69,7 @@ class InvoiceController extends Controller
         // Validasi input dari form
         $validated = $request->validate([
             'nomor' => 'required|string|max:50',
+            'kode_suffix' => 'required',
             'kepada' => 'required|string|max:50',
             'tanggal' => 'required|date',
             // 'lokasi' => 'required|string|max:50',
@@ -77,15 +78,15 @@ class InvoiceController extends Controller
             'harga_satuan' => 'required|array',
         ]);
 
-        $rawNomor = trim($validated['nomor']);
-        $tanggal = \Carbon\Carbon::parse($validated['tanggal']);
-        $bulan = $tanggal->format('m');
-        $tahun = $tanggal->format('y');
-        $finalNomor = $rawNomor . '/' . $bulan . '-' . $tahun;
+        // $rawNomor = trim($validated['nomor']);
+        // $tanggal = \Carbon\Carbon::parse($validated['tanggal']);
+        // $bulan = $tanggal->format('m');
+        // $tahun = $tanggal->format('y');
+        // $finalNomor = $rawNomor . '/' . $bulan . '-' . $tahun;
 
         // Simpan data invoice
         $invoice = new Invoice([
-            'nomor' => $finalNomor,
+            'nomor' => $request->nomor . $request->kode_suffix,
             'kepada' => trim($validated['kepada']),
             'tanggal' => $validated['tanggal'],
             // 'lokasi' => $validated['lokasi'],
@@ -129,7 +130,7 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        $invoice = Invoice::with('items')->findOrFail($invoice->id);
+        $invoice = Invoice::with('details')->findOrFail($invoice->id);
         $barangs = \App\Models\Barang::all();
         return view('invoice.edit', compact('invoice', 'barangs'));
     }
@@ -142,7 +143,7 @@ class InvoiceController extends Controller
         // Validasi input
         $validated = $request->validate([
             'kepada' => 'required|string|max:50',
-            'tanggal' => 'required|date',
+            // 'tanggal' => 'required|date',
             'keterangan' => 'required|array',
             'jumlah' => 'required|array',
             'harga_satuan' => 'required|array',
@@ -152,11 +153,11 @@ class InvoiceController extends Controller
         // Update invoice utama
         $invoice->update([
             'kepada' => trim($request->kepada),
-            'tanggal' => $request->tanggal,
+            // 'tanggal' => $request->tanggal,
         ]);
 
         // Ambil semua ID detail lama dari DB
-        $existingDetailIds = $invoice->items()->pluck('id')->toArray();
+        $existingDetailIds = $invoice->details()->pluck('id')->toArray();
         $formDetailIds = $request->detailId ?? [];
 
         // Siapkan array untuk tracking ID yang masih dipakai
@@ -230,9 +231,9 @@ class InvoiceController extends Controller
     }
     public function print($invoice)
     {
-        $invoice = Invoice::with('items')->findOrFail($invoice);
+        $invoice = Invoice::with('details')->findOrFail($invoice);
         $subtotal = 0;
-        foreach ($invoice->items as $item) {
+        foreach ($invoice->details as $item) {
             $subtotal += $item->harga_satuan * $item->jumlah;
         }
         $total = $subtotal + ($subtotal * 0.11);
@@ -241,44 +242,41 @@ class InvoiceController extends Controller
     }
     private function terbilang($angka)
     {
-        $angka = abs($angka);
+        $angka = abs((int)$angka); // Pastikan angka bulat dan positif
         $baca = [
             '', 'satu', 'dua', 'tiga', 'empat', 'lima',
             'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'
         ];
-        $hasil = '';
 
         if ($angka < 12) {
-            $hasil = " " . $baca[$angka];
+            return $baca[$angka];
         } elseif ($angka < 20) {
-            $hasil = $this->terbilang($angka - 10) . " belas ";
+            return $this->terbilang($angka - 10) . ' belas';
         } elseif ($angka < 100) {
-            $hasil = $this->terbilang($angka / 10) . " puluh " . $this->terbilang($angka % 10);
+            return $this->terbilang(intval($angka / 10)) . ' puluh' . ($angka % 10 !== 0 ? ' ' . $this->terbilang($angka % 10) : '');
         } elseif ($angka < 200) {
-            $hasil = " seratus" . $this->terbilang($angka - 100);
+            return 'seratus' . ($angka - 100 !== 0 ? ' ' . $this->terbilang($angka - 100) : '');
         } elseif ($angka < 1000) {
-            $hasil = $this->terbilang($angka / 100) . " ratus " . $this->terbilang($angka % 100);
+            return $this->terbilang(intval($angka / 100)) . ' ratus' . ($angka % 100 !== 0 ? ' ' . $this->terbilang($angka % 100) : '');
         } elseif ($angka < 2000) {
-            $hasil = " seribu" . $this->terbilang($angka - 1000);
+            return 'seribu' . ($angka - 1000 !== 0 ? ' ' . $this->terbilang($angka - 1000) : '');
         } elseif ($angka < 1000000) {
-            $hasil = $this->terbilang($angka / 1000) . " ribu " . $this->terbilang($angka % 1000);
+            return $this->terbilang(intval($angka / 1000)) . ' ribu' . ($angka % 1000 !== 0 ? ' ' . $this->terbilang($angka % 1000) : '');
         } elseif ($angka < 1000000000) {
-            $hasil = $this->terbilang($angka / 1000000) . " juta " . $this->terbilang($angka % 1000000);
+            return $this->terbilang(intval($angka / 1000000)) . ' juta' . ($angka % 1000000 !== 0 ? ' ' . $this->terbilang($angka % 1000000) : '');
         } elseif ($angka < 1000000000000) {
-            $hasil = $this->terbilang($angka / 1000000000) . " miliar " . $this->terbilang($angka % 1000000000);
+            return $this->terbilang(intval($angka / 1000000000)) . ' miliar' . ($angka % 1000000000 !== 0 ? ' ' . $this->terbilang($angka % 1000000000) : '');
         } else {
-            $hasil = $this->terbilang($angka / 1000000000000) . " triliun " . $this->terbilang($angka % 1000000000000);
+            return $this->terbilang(intval($angka / 1000000000000)) . ' triliun' . ($angka % 1000000000000 !== 0 ? ' ' . $this->terbilang($angka % 1000000000000) : '');
         }
-
-        return trim($hasil);
     }
 
     public function download($invoice)
     {
-        $invoice = Invoice::with('items')->findOrFail($invoice);
+        $invoice = Invoice::with('details')->findOrFail($invoice);
 
         $subtotal = 0;
-        foreach ($invoice->items as $item) {
+        foreach ($invoice->details as $item) {
             $subtotal += $item->harga_satuan * $item->jumlah;
         }
         $total = $subtotal + ($subtotal * 0.11);

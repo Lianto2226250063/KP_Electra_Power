@@ -4,6 +4,7 @@
 <div class="container">
     <h2 class="mb-4">Dashboard Penjualan</h2>
 
+    {{-- Statistik Kartu --}}
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card text-white bg-primary mb-3">
@@ -43,6 +44,7 @@
     <div class="card mb-4">
         <div class="card-header">Grafik Penjualan per Bulan (Tahun {{ $selectedYear }})</div>
         <div class="card-body">
+            {{-- Form Tahun --}}
             <form method="GET" id="yearFilterForm" class="mb-3">
                 <div class="form-group row">
                     <label for="year" class="col-sm-2 col-form-label">Pilih Tahun:</label>
@@ -55,7 +57,9 @@
                     </div>
                 </div>
             </form>
+
             <div class="row">
+                {{-- Chart Jumlah Invoice --}}
                 <div class="col-md-6">
                     <h5 class="text-center">Jumlah Invoice</h5>
                     <div class="text-center mb-2">
@@ -64,6 +68,8 @@
                     </div>
                     <canvas id="invoiceChart"></canvas>
                 </div>
+
+                {{-- Chart Omzet --}}
                 <div class="col-md-6">
                     <h5 class="text-center">Total Omzet</h5>
                     <div class="text-center mb-2">
@@ -73,14 +79,24 @@
                     <canvas id="omzetChart"></canvas>
                 </div>
             </div>
+
+            {{-- Chart Frekuensi Invoice per Pelanggan --}}
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <h5 class="text-center">Frekuensi Invoice per Pelanggan ({{ $selectedYear }})</h5>
+                    <canvas id="customerInvoiceChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+{{-- Chart.js --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const labels = {!! json_encode($salesChartLabels) !!};
 
+    // Invoice chart
     const invoiceChart = new Chart(document.getElementById('invoiceChart').getContext('2d'), {
         type: 'bar',
         data: {
@@ -96,14 +112,12 @@
         options: {
             responsive: true,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    stepSize: 1
-                }
+                y: { beginAtZero: true }
             }
         }
     });
 
+    // Omzet chart
     const omzetChart = new Chart(document.getElementById('omzetChart').getContext('2d'), {
         type: 'bar',
         data: {
@@ -125,6 +139,54 @@
                         callback: function(value) {
                             return 'Rp ' + value.toLocaleString('id-ID');
                         }
+                    }
+                }
+            }
+        }
+    });
+
+    // Line chart for customer invoice frequency
+    const customerInvoiceCtx = document.getElementById('customerInvoiceChart').getContext('2d');
+    const customerInvoiceData = {!! json_encode($customerInvoiceFrequencyData) !!};
+
+    const customerDatasets = Object.entries(customerInvoiceData).map(([customer, data], index) => {
+        const colorList = [
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 159, 64, 1)'
+        ];
+        const color = colorList[index % colorList.length];
+        return {
+            label: customer,
+            data: data,
+            fill: false,
+            borderColor: color,
+            backgroundColor: color,
+            tension: 0.3
+        };
+    });
+
+    new Chart(customerInvoiceCtx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: customerDatasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
                     }
                 }
             }
