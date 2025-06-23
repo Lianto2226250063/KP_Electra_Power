@@ -57,7 +57,7 @@ class BarangController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
-            'harga_default' => 'required|numeric',
+            'harga' => 'required|numeric|min:0',
         ]);
 
         $barang->update($validated);

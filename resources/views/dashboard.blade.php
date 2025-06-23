@@ -83,7 +83,7 @@
             {{-- Chart Frekuensi Invoice per Pelanggan --}}
             <div class="row mt-5">
                 <div class="col-md-12">
-                    <h5 class="text-center">Frekuensi Invoice per Pelanggan ({{ $selectedYear }})</h5>
+                    <h5 class="text-center">Frekuensi Invoice per Pelanggan</h5>
                     <canvas id="customerInvoiceChart"></canvas>
                 </div>
             </div>

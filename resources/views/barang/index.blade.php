@@ -41,7 +41,7 @@
                     <tr>                        
                         <td>{{ $item->id ?? '-' }}</td>
                         <td>{{ $item->nama }}</td>
-                        <td>{{ number_format($item->harga, 0, ',', '.') }}</td>
+                        <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center align-items-center gap-2">
                                 @if (Auth::user()->role === 'admin')
