@@ -44,16 +44,12 @@
                         <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center align-items-center gap-2">
-                                @if (Auth::user()->role === 'admin')
-                                    <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-outline-success btn-sm mr-2">Edit</a>
-                                @endif
-                                @if (Auth::user()->role === 'admin')
-                                    <form method="POST" action="{{ route('barang.destroy', $item->id) }}">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="btn btn-outline-danger btn-rounded btn-sm show_confirm" data-toggle="tooltip" title="Delete" data-nama='{{ $item->nama }}'>Hapus</button>
-                                    </form>
-                                @endif
+                                <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-outline-success btn-sm mr-2">Edit</a>
+                                <form method="POST" action="{{ route('barang.destroy', $item->id) }}">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-danger btn-rounded btn-sm show_confirm" data-toggle="tooltip" title="Delete" data-nama='{{ $item->nama }}'>Hapus</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

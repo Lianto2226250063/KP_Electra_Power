@@ -44,6 +44,7 @@ Route::controller(DashboardController::class)->group(function () {
         Route::delete('/delete/{invoice}', 'destroy')->name('destroy');
         Route::get('/{invoice}/print', 'print')->name('print');
         Route::get('/download/{id}', 'download')->name('download');
+        Route::put('/toggle-status/{invoice}', 'toggleStatus')->name('toggleStatus');
     });
     Route::controller(BarangController::class)->prefix('/barang')->name('barang.')->group(function () {
         Route::get('/index', 'index')->name('index');

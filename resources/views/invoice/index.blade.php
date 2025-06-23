@@ -14,6 +14,13 @@
             <div class="col-md-8">
                 <form action="{{ route('invoice.index') }}" method="GET" class="row g-2 justify-content-end align-items-end">
                     <div class="col-md-auto">
+                        <select name="prefix" class="form-control">
+                            <option value="">-- Tipe --</option>
+                            <option value="EP" {{ request('prefix') === 'EP' ? 'selected' : '' }}>EP</option>
+                            <option value="EPI" {{ request('prefix') === 'EPI' ? 'selected' : '' }}>EPI</option>
+                        </select>
+                    </div>
+                    <div class="col-md-auto">
                         <input type="text" name="search" class="form-control" placeholder="Cari invoice..." value="{{ request('search') }}">
                     </div>
                     <div class="col-md-auto">
@@ -46,6 +53,7 @@
                     <th>Nomor</th>
                     <th>Tempat & Tanggal Penjualan</th>
                     <th>Kepada</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -60,6 +68,21 @@
                     <td>{{ $item->nomor ?? '-' }}</td>
                     <td>{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') : '-' }}</td>
                     <td>{{ $item->kepada ?? '-' }}</td>
+                    <td>
+                        @auth
+                            @if (Auth::user()->name === $item->pegawai->name || Auth::user()->role === 'admin')
+                            <form action="{{ route('invoice.toggleStatus', $item->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-sm {{ $item->status === 'Sudah bayar' ? 'btn-success' : 'btn-secondary' }}">
+                                    {{ ucfirst($item->status) }}
+                                </button>
+                            </form>  
+                            @elseif (Auth::user()->role === 'user')
+                            {{ ucfirst($item->status) }}
+                            @endif
+                        @endauth
+                    </td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center align-items-center gap-2">                           
                             <a href="{{ route('invoice.download', $item->id) }}" class="btn btn-outline-warning btn-sm">Download PDF</a>

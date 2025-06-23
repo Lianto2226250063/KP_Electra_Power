@@ -175,7 +175,11 @@
         </tr>
         <tr>
             <td colspan="5" class="text-right">
-                <img src="{{ $ttdSrc }}" alt="TTD" style="height:100px; width:150px;">
+                @if($invoice->status === 'Sudah bayar')
+                    <img src="{{ $ttdSrc }}" alt="TTD" style="height:100px; width:150px;">
+                    @else
+                        <br><br><br><br><br><br>
+                @endif
             </td>
         </tr>
         <tr>

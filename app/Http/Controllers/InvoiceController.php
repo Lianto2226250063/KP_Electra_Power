@@ -11,12 +11,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $query = Invoice::with(['pegawai', 'details']); // Memuat pegawai & detail invoice sekaligus
+        $query = Invoice::with(['pegawai', 'details']);
 
         // Filter pencarian
         if ($request->filled('search')) {
@@ -30,17 +27,19 @@ class InvoiceController extends Controller
             });
         }
 
-        // Filter berdasarkan bulan
         if ($request->filled('bulan')) {
             $query->whereMonth('tanggal', $request->bulan);
         }
 
-        // Filter berdasarkan tahun
         if ($request->filled('tahun')) {
             $query->whereYear('tanggal', $request->tahun);
         }
 
-        // Ambil data terbaru dengan pagination
+        if ($request->filled('prefix')) {
+            $prefix = $request->prefix;
+            $query->where('nomor', 'like', '%/' . $prefix . '/%');
+        }
+
         $invoice = $query->latest()->paginate(10)->withQueryString();
 
         return view('invoice.index', compact('invoice'));
@@ -66,38 +65,45 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input dari form
+        // Hilangkan semua spasi dari nomor
+        $nomorBersih = preg_replace('/\s+/', '', $request->nomor);
+        $nomorLengkap = $nomorBersih . $request->kode_suffix;
+
+        // Validasi input
         $validated = $request->validate([
             'nomor' => 'required|string|max:50',
-            'kode_suffix' => 'required',
+            'kode_suffix' => 'required|string|max:50',
             'kepada' => 'required|string|max:50',
             'tanggal' => 'required|date',
-            // 'lokasi' => 'required|string|max:50',
             'keterangan' => 'required|array',
             'jumlah' => 'required|array',
             'harga_satuan' => 'required|array',
         ]);
 
-        // $rawNomor = trim($validated['nomor']);
-        // $tanggal = \Carbon\Carbon::parse($validated['tanggal']);
-        // $bulan = $tanggal->format('m');
-        // $tahun = $tanggal->format('y');
-        // $finalNomor = $rawNomor . '/' . $bulan . '-' . $tahun;
+        // Ambil bagian sebelum "/" untuk dicek duplikat (misalnya INV001 dari INV001/EP/INV/06-25)
+        $nomorPrefix = explode('/INV', $nomorLengkap)[0];
 
-        // Simpan data invoice
+        // Cek apakah ada invoice lain yang nomor-nya dimulai dengan prefix tersebut
+        $duplikat = Invoice::where('nomor', 'like', $nomorPrefix . '/%')->exists();
+        if ($duplikat) {
+            return back()
+                ->withErrors(['nomor' => 'Nomor sudah digunakan.'])
+                ->withInput();
+        }
+
+        // Simpan invoice
         $invoice = new Invoice([
-            'nomor' => $request->nomor . $request->kode_suffix,
+            'nomor' => $nomorLengkap,
             'kepada' => trim($validated['kepada']),
             'tanggal' => $validated['tanggal'],
-            // 'lokasi' => $validated['lokasi'],
-            'id_pegawai' => Auth::id(),  // Menyimpan nama pengguna yang sedang login
+            'id_pegawai' => Auth::id(),
         ]);
         $invoice->save();
 
         // Simpan detail invoice
         foreach ($validated['keterangan'] as $index => $keterangan) {
             $barang = Barang::where('nama', trim($keterangan))->first();
-            if(!$barang){
+            if (!$barang) {
                 Barang::create([
                     'nama' => trim($keterangan),
                     'harga' => $validated['harga_satuan'][$index],
@@ -112,8 +118,15 @@ class InvoiceController extends Controller
             ]);
         }
 
-        // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('invoice.index')->with('success', 'Invoice berhasil ditambahkan.');
+    }
+
+    public function toggleStatus(Invoice $invoice)
+    {
+        $invoice->status = $invoice->status === 'Belum bayar' ? 'Sudah bayar' : 'Belum bayar';
+        $invoice->save();
+
+        return redirect()->route('invoice.index')->with('success', 'Status pembayaran berhasil diperbarui.');
     }
 
     /**
@@ -143,7 +156,6 @@ class InvoiceController extends Controller
         // Validasi input
         $validated = $request->validate([
             'kepada' => 'required|string|max:50',
-            // 'tanggal' => 'required|date',
             'keterangan' => 'required|array',
             'jumlah' => 'required|array',
             'harga_satuan' => 'required|array',
