@@ -34,7 +34,7 @@
                         </select>
                     </div>
                     <div class="col-md-auto">
-                        <input type="number" name="tahun" class="form-control" placeholder="Tahun" min="2000" value="{{ request('tahun') }}">
+                        <input type="number" name="tahun" class="form-control form-control-sm" placeholder="Tahun" min="2000" value="{{ request('tahun') }}" style="width: 100px; height: 37px">
                     </div>
                     <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Filter</button>
@@ -59,12 +59,12 @@
             </thead>
             <tbody>
             @foreach ($invoice as $item)
-                <tr>                      
+                <tr>
                     <td>
                         <button class="btn btn-outline-dark btn-sm toggle-detail" data-id="{{ $item->id }}">
                             <span class="toggle-icon" id="icon-{{ $item->id }}">▼</span>
                         </button>
-                    </td>  
+                    </td>
                     <td>{{ $item->nomor ?? '-' }}</td>
                     <td>{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') : '-' }}</td>
                     <td>{{ $item->kepada ?? '-' }}</td>
@@ -77,14 +77,14 @@
                                 <button type="submit" class="btn btn-sm {{ $item->status === 'Sudah bayar' ? 'btn-success' : 'btn-secondary' }}">
                                     {{ ucfirst($item->status) }}
                                 </button>
-                            </form>  
+                            </form>
                             @elseif (Auth::user()->role === 'user')
                             {{ ucfirst($item->status) }}
                             @endif
                         @endauth
                     </td>
                     <td class="text-center">
-                        <div class="d-flex justify-content-center align-items-center gap-2">                           
+                        <div class="d-flex justify-content-center align-items-center gap-2">
                             <a href="{{ route('invoice.download', $item->id) }}" class="btn btn-outline-warning btn-sm">Download PDF</a>
                             <a href="{{ route('invoice.print', $item->id) }}" class="btn btn-outline-primary btn-sm">Print</a>
                             @if (Auth::user()->name === $item->pegawai->name || Auth::user()->role === 'admin')

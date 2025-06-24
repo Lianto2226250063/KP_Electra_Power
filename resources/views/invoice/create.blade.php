@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <label for="nomor">Nomor Invoice</label>
                         <div class="input-group">
-                            <input type="text" id="nomor" class="form-control" name="nomor" x-model="nomorManual" placeholder="Masukkan nomor invoice (misal: 0012)" required>
+                            <input type="text" id="nomor" class="form-control" name="nomor" x-model="nomorManual" placeholder="Masukkan nomor invoice" required>
                             <span class="input-group-text bg-light" x-text="kodeInvoice()">/--/--</span>
                         </div>
                         <input type="hidden" name="kode_suffix" :value="kodeInvoice()">

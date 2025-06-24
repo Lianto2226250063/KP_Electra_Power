@@ -77,11 +77,11 @@
 @php
     $isPdf = request()->is('invoice/print/*') || request()->is('invoice/download/*');
 
-    $logoSrc = $isPdf 
-        ? public_path('images/ElectraPower.png') 
+    $logoSrc = $isPdf
+        ? public_path('images/ElectraPower.png')
         : asset('images/ElectraPower.png');
 
-    $ttdSrc = $isPdf 
+    $ttdSrc = $isPdf
         ? public_path('storage/' . $invoice->pegawai->ttd)
         : asset('storage/' . $invoice->pegawai->ttd);
 @endphp
@@ -132,7 +132,7 @@
                 @endphp
             @endforeach
         </tbody>
-        <tfoot> 
+        <tfoot>
             @php
                 $hasPPN = str_contains(strtoupper($invoice->nomor), 'EPI');
             @endphp
@@ -165,7 +165,7 @@
 
         <div class="note">
             Terbilang: <em>{{ ucwords($terbilang) }} Rupiah</em>
-        </div>    
+        </div>
 
         <br><br>
 

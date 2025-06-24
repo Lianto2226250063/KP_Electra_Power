@@ -40,7 +40,7 @@ class InvoiceController extends Controller
             $query->where('nomor', 'like', '%/' . $prefix . '/%');
         }
 
-        $invoice = $query->latest()->paginate(10)->withQueryString();
+        $invoice = $query->orderBy('nomor', 'asc')->paginate(10)->withQueryString();
 
         return view('invoice.index', compact('invoice'));
     }
@@ -243,13 +243,26 @@ class InvoiceController extends Controller
     }
     public function print($invoice)
     {
-        $invoice = Invoice::with('details')->findOrFail($invoice);
+        $invoice = Invoice::with('details', 'pegawai')->findOrFail($invoice);
+
         $subtotal = 0;
         foreach ($invoice->details as $item) {
             $subtotal += $item->harga_satuan * $item->jumlah;
         }
-        $total = $subtotal + ($subtotal * 0.11);
+
+        // Cek apakah ada PPN berdasarkan nomor invoice
+        $hasPPN = str_contains(strtoupper($invoice->nomor), 'EPI');
+
+        if ($hasPPN) {
+            $ppn = $subtotal * 0.11;
+            $total = $subtotal + $ppn;
+        } else {
+            $ppn = 0;
+            $total = $subtotal;
+        }
+
         $terbilang = $this->terbilang($total);
+
         return view('invoice.print', compact('invoice', 'terbilang'));
     }
     private function terbilang($angka)
