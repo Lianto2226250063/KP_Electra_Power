@@ -71,7 +71,7 @@ section
                       <p class="small mb-0">PT Electra Power adalah suatu usaha yang bergerak di bidang jasa service electro motor, genset, reparasi suku cadang mekanik serta menyediakan aneka sparepart elektromotor seperti fan, terminal, cover, kawat tembaga supreme, snapring, bearing. Workshop ini didukung dengan peralatan kerja yang modern dan lengkap, yang memudahkan proses pengerjaan untuk mencapai efisiensi waktu dan biaya.
                       </p>
                       <br>
-                      <a href="">
+                      <a href="whatsapp://send?text=Hello&phone=+6285838830698">
                         <button class="btn btn-primary btn-block fa-lg bg-dark mb-3" type="button">Hubungi kami Melalui Whatsapp</button>
                       </a>
                     </div>
