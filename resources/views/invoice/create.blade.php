@@ -12,8 +12,6 @@
                 <br>
                 <form class="forms-sample" method="POST" action="{{ route('invoice.store') }}">
                     @csrf
-
-                    {{-- Tipe Invoice --}}
                     <div class="form-group">
                         <label for="tipe">Tipe Invoice</label>
                         <select class="form-control" name="tipe" x-model="tipe" required>
@@ -22,8 +20,6 @@
                             <option value="EPI">EPI</option>
                         </select>
                     </div>
-
-                    {{-- Nomor Invoice --}}
                     <div class="form-group">
                         <label for="nomor">Nomor Invoice</label>
                         <div class="input-group">
@@ -35,8 +31,6 @@
                             <label class="text-danger">{{ $message }}</label>
                         @enderror
                     </div>
-
-                    {{-- Kepada --}}
                     <div class="form-group">
                         <label for="kepada">Kepada</label>
                         <input type="text" class="form-control" name="kepada" placeholder="Masukkan nama penerima" required>
@@ -44,8 +38,6 @@
                             <label class="text-danger">{{ $message }}</label>
                         @enderror
                     </div>
-
-                    {{-- Tanggal --}}
                     <div class="form-group">
                         <label for="tanggal">Tanggal</label>
                         <input type="date" class="form-control" name="tanggal" x-model="tanggal" required>
@@ -53,11 +45,8 @@
                             <label class="text-danger">{{ $message }}</label>
                         @enderror
                     </div>
-
                     <br>
                     <h4 class="text-xl">Detail Invoice</h4>
-
-                    {{-- Tabel Detail Invoice --}}
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -100,20 +89,33 @@
                             </tbody>
                         </table>
                     </div>
-
                     <button type="button" @click="details.push({ keterangan: '', jumlah: '', harga_satuan: '' })" class="btn btn-outline-primary btn-sm mt-2">Tambah Detail</button>
                     <br><br>
-
-                    {{-- Tombol Submit --}}
-                    <button type="submit" class="btn btn-outline-success btn-sm me-2">Submit</button>
-                    <a href="{{ route('invoice.index') }}" class="btn btn-outline-danger btn-sm">Cancel</a>
+                    <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Submit</button>
+                    <a href="/invoice/index" class="btn btn-outline-danger btn-sm">Cancel</a>
+                    <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header bg-warning">
+                            <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Submit</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                        </div>
+                        <div class="modal-body">
+                            Apakah Anda yakin ingin membuat invoice ini?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-success">Ya, Submit</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
-
 @push('scripts')
 <script>
     function invoiceForm() {
@@ -123,12 +125,10 @@
             nomorManual: '',
             details: [{ keterangan: '', jumlah: '', harga_satuan: '' }],
             barangMap: @json($barangs->pluck('harga', 'nama')),
-
             updateHarga(index) {
                 const nama = this.details[index].keterangan;
                 this.details[index].harga_satuan = this.barangMap[nama] ?? '';
             },
-
             kodeInvoice() {
                 if (!this.tipe || !this.tanggal) return '/--/--';
                 const date = new Date(this.tanggal);

@@ -3,13 +3,10 @@
 
 <style>
     .gradient-custom-2 {
-/* fallback for old browsers */
 background: #121766;
 
-/* Chrome 10-25, Safari 5.1-6 */
 background: -webkit-linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
 
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 background: linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
 }
 
@@ -21,7 +18,7 @@ height: 100vh !important;
 @media (min-width: 769px) {
 .gradient-custom-2 {
   background: linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
-    border: 2px solid #1f22c7; /* match one of your gradient colors */
+    border: 2px solid #1f22c7;
     color: white;
 }
 }
@@ -72,7 +69,7 @@ section
                       </p>
                       <br>
                       <a href="whatsapp://send?text=Hello&phone=+6285838830698">
-                        <button class="btn btn-primary btn-block fa-lg bg-dark mb-3" type="button">Hubungi kami Melalui Whatsapp</button>
+                        <button class="btn btn-primary btn-block fa-lg bg-dark mb-3" type="button">Hubungi Kami Melalui Whatsapp</button>
                       </a>
                     </div>
                   </div>

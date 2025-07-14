@@ -10,7 +10,7 @@ class CreateInvoiceDetailsTable extends Migration
     {
         Schema::create('invoice_details', function (Blueprint $table) {
             $table->id();
-            $table->uuid('id_invoice'); // Ubah ke uuid
+            $table->uuid('id_invoice');
             $table->foreign('id_invoice')->references('id')->on('invoices')->onDelete('cascade');
             $table->text('keterangan');
             $table->integer('jumlah');

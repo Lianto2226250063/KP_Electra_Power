@@ -5,12 +5,9 @@
 <div class="container">
     <div class="container mb-3">
         <div class="row align-items-end">
-            <!-- Kolom kiri: Tambah -->
             <div class="col-md-4">
                 <a href="{{ route('invoice.create') }}" class="btn btn-success">Tambah Invoice</a>
             </div>
-
-            <!-- Kolom kanan: Filter -->
             <div class="col-md-8">
                 <form action="{{ route('invoice.index') }}" method="GET" class="row g-2 justify-content-end align-items-end">
                     <div class="col-md-auto">
@@ -101,7 +98,6 @@
                     </td>
                 </tr>
 
-                {{-- Detail Row --}}
                 <tr class="invoice-detail-row d-none" id="detail-{{ $item->id }}" style="background-color: #f9f9f9;">
                     <td colspan="4" class="text-start">
                         <strong>Detail Invoice:</strong>
@@ -129,7 +125,6 @@
     </div>
 </div>
 
-{{-- Toggle Detail Script --}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.toggle-detail').forEach(button => {

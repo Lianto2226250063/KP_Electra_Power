@@ -3,8 +3,6 @@
 @section('content')
 <div class="container">
     <h2 class="mb-4">Dashboard Penjualan</h2>
-
-    {{-- Statistik Kartu --}}
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card text-white bg-primary mb-3">
@@ -40,11 +38,9 @@
         </div>
     </div>
 
-    {{-- Grafik penjualan per bulan --}}
     <div class="card mb-4">
         <div class="card-header">Grafik Penjualan per Bulan (Tahun {{ $selectedYear }})</div>
         <div class="card-body">
-            {{-- Form Tahun --}}
             <form method="GET" id="yearFilterForm" class="mb-3">
                 <div class="form-group row">
                     <label for="year" class="col-sm-2 col-form-label">Pilih Tahun:</label>
@@ -59,7 +55,6 @@
             </form>
 
             <div class="row">
-                {{-- Chart Jumlah Invoice --}}
                 <div class="col-md-6">
                     <h5 class="text-center">Jumlah Invoice</h5>
                     <div class="text-center mb-2">
@@ -69,7 +64,6 @@
                     <canvas id="invoiceChart"></canvas>
                 </div>
 
-                {{-- Chart Omzet --}}
                 <div class="col-md-6">
                     <h5 class="text-center">Total Omzet</h5>
                     <div class="text-center mb-2">
@@ -80,7 +74,6 @@
                 </div>
             </div>
 
-            {{-- Chart Frekuensi Invoice per Pelanggan --}}
             <div class="row mt-5">
                 <div class="col-md-12">
                     <h5 class="text-center">Frekuensi Invoice per Pelanggan Tahun {{ $selectedYear }}</h5>
@@ -91,12 +84,10 @@
     </div>
 </div>
 
-{{-- Chart.js --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const labels = {!! json_encode($salesChartLabels) !!};
 
-    // Invoice chart
     const invoiceChart = new Chart(document.getElementById('invoiceChart').getContext('2d'), {
         type: 'bar',
         data: {
@@ -117,7 +108,6 @@
         }
     });
 
-    // Omzet chart
     const omzetChart = new Chart(document.getElementById('omzetChart').getContext('2d'), {
         type: 'bar',
         data: {
@@ -145,7 +135,6 @@
         }
     });
 
-    // Line chart for customer invoice frequency
     const customerInvoiceCtx = document.getElementById('customerInvoiceChart').getContext('2d');
     const customerInvoiceData = {!! json_encode($customerInvoiceFrequencyData) !!};
 

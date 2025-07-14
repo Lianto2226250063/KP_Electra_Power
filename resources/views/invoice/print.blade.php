@@ -12,29 +12,24 @@
             font-size: 14px;
             color: #000;
         }
-
         .invoice-box {
             max-width: 800px;
             margin: auto;
             padding: 30px;
             /* border: 1px solid #eee; */
         }
-
         .logo {
             width: 400px;
             margin-bottom: 40px;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         td, th {
             padding: 5px;
             vertical-align: top;
         }
-
         .heading {
             font-weight: bold;
             text-align: center;
@@ -42,45 +37,36 @@
             font-size: 25px;
             text-decoration: underline;
         }
-
         .bordered th, .bordered td {
             border: 1px solid #000;
         }
-
         .text-right {
             text-align: right;
         }
-
         .text-center {
             text-align: center;
         }
-
         .note {
             font-style: italic;
             margin-top: 30px;
             font-size: 12px;
         }
-
         .no-print {
             display: block;
         }
-
         @media print {
             .no-print {
                 display: none;
             }
         }
-
     </style>
 </head>
 <body>
 @php
     $isPdf = request()->is('invoice/print/*') || request()->is('invoice/download/*');
-
     $logoSrc = $isPdf
         ? public_path('images/ElectraPower.png')
         : asset('images/ElectraPower.png');
-
     $ttdSrc = $isPdf
         ? public_path('storage/' . $invoice->pegawai->ttd)
         : asset('storage/' . $invoice->pegawai->ttd);
@@ -92,10 +78,8 @@
 </div>
 @endif
 <div class="invoice-box">
-
     <img src="{{ $logoSrc }}" class="logo" alt="Logo">
     <div class="heading">INVOICE</div>
-
     <table>
         <tr>
             <td>Nomor: <strong>{{ $invoice->nomor }}</strong></td>
@@ -105,9 +89,7 @@
             <td>Kepada: <strong>{{ $invoice->kepada }}</strong></td>
         </tr>
     </table>
-
     <br>
-
     <table class="bordered">
         <thead>
             <tr>
@@ -136,7 +118,6 @@
             @php
                 $hasPPN = str_contains(strtoupper($invoice->nomor), 'EPI');
             @endphp
-
             @if ($hasPPN)
             @php
                 $ppn = $subtotal * 0.11;
@@ -162,13 +143,10 @@
             @endif
         </tfoot>
     </table>
-
         <div class="note">
             Terbilang: <em>{{ ucwords($terbilang) }} Rupiah</em>
         </div>
-
         <br><br>
-
         <table>
         <tr>
             <td class="text-right " colspan="5"><div style="padding-right: 20px">Hormat kami,</div></td>
