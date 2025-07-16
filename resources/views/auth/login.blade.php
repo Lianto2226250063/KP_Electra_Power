@@ -29,10 +29,8 @@
                         <div class="mb-md-5 mt-md-4 pb-5">
 
                             <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                            {{-- <p class="text-white-50 mb-4">Please enter your email and password!</p> --}}
                             <br>
 
-                            <!-- ALERT ERROR UMUM -->
                             @if ($errors->any())
                                 <div class="alert alert-danger text-start">
                                     @foreach ($errors->all() as $error)

@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'role' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => \Hash::make('admin'),
+            'password' => \Hash::make('admin123'),
             'ttd' => 'ttd/ttd_admin.png',
         ]);
     }
