@@ -84,20 +84,24 @@
                         <div class="d-flex justify-content-center align-items-center gap-2">
                             <a href="{{ route('invoice.download', $item->id) }}" class="btn btn-outline-warning btn-sm">Download PDF</a>
                             <a href="{{ route('invoice.print', $item->id) }}" class="btn btn-outline-primary btn-sm">Print</a>
+
                             @if (Auth::user()->name === $item->pegawai->name || Auth::user()->role === 'admin')
                                 <a href="{{ route('invoice.edit', $item->id) }}" class="btn btn-outline-success btn-sm">Edit</a>
                             @endif
+
                             @if (Auth::user()->role === 'admin')
-                                <form method="POST" action="{{ route('invoice.destroy', $item->id) }}">
-                                    @method('delete')
+                                <form method="POST" action="{{ route('invoice.destroy', $item->id) }}" class="delete-form d-inline">
                                     @csrf
-                                    <button type="submit" class="btn btn-outline-danger btn-sm show_confirm" data-toggle="tooltip" title="Delete" data-nama='{{ $item->nomor }}'>Hapus</button>
+                                    @method('delete')
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-delete" 
+                                        data-nama="{{ $item->nomor }}">
+                                        Hapus
+                                    </button>
                                 </form>
                             @endif
                         </div>
                     </td>
                 </tr>
-
                 <tr class="invoice-detail-row d-none" id="detail-{{ $item->id }}" style="background-color: #f9f9f9;">
                     <td colspan="4" class="text-start">
                         <strong>Detail Invoice:</strong>
@@ -125,20 +129,54 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalDeleteLabel">Konfirmasi Hapus</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Apakah Anda yakin ingin menghapus invoice <strong id="deleteInvoiceName"></strong> ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.toggle-detail').forEach(button => {
-            button.addEventListener('click', () => {
-                const id = button.getAttribute('data-id');
-                const row = document.getElementById('detail-' + id);
-                const icon = document.getElementById('icon-' + id);
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggle-detail').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            const row = document.getElementById('detail-' + id);
+            const icon = document.getElementById('icon-' + id);
 
-                row.classList.toggle('d-none');
-
-                const isHidden = row.classList.contains('d-none');
-                icon.textContent = isHidden ? '▼' : '▲';
-            });
+            row.classList.toggle('d-none');
+            icon.textContent = row.classList.contains('d-none') ? '▼' : '▲';
         });
     });
+
+    let formToDelete = null;
+    const modalDelete = new bootstrap.Modal(document.getElementById('modalDelete'));
+    const deleteInvoiceName = document.getElementById('deleteInvoiceName');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const namaInvoice = this.dataset.nama;
+            deleteInvoiceName.textContent = namaInvoice;
+            formToDelete = this.closest('form');
+            modalDelete.show();
+        });
+    });
+
+    confirmDeleteBtn.addEventListener('click', function () {
+        if (formToDelete) formToDelete.submit();
+    });
+});
 </script>
 @endsection
