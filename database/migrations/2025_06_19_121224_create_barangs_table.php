@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama')->unique();
             $table->decimal('harga',15, 2);
+            $table->string('jenis');
             $table->timestamps();
         });
     }

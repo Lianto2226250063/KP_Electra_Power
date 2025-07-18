@@ -63,6 +63,11 @@
                                 <br>
                                 <button class="btn btn-primary btn-block fa-lg gradient-custom mb-3" style="width:100%" type="submit">Login</button>
                             </form>
+                            <div class="text-center">
+                                <a href="{{ route('password.request') }}" class="text-muted">
+                                    Lupa Password?
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

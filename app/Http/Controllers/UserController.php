@@ -16,7 +16,7 @@ class UserController extends Controller
         $users = User::query()
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")
-                      ->orWhere('email', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%");
             })
             ->where('id', '!=', auth()->id())
             ->orderBy('name')
@@ -33,8 +33,9 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'Status pengguna berhasil diperbarui.');
     }
 
-    public function editPassword()
+    public function edit()
     {
+        // menampilkan form ubah password
         return view('user.password');
     }
 

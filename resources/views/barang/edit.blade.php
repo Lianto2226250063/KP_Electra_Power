@@ -32,6 +32,17 @@
                             <label class="text-danger">{{ $message }}</label>
                         @enderror
                     </div>
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="Jenis">Jenis</label>
+                        <select name="Jenis" class="form-control ">
+                            <option value="" disabled selected>Pilih Jenis</option>
+                            <option value="Barang">Barang</option>
+                            <option value="Jasa">Jasa</option>
+                        </select>
+                        @error('Jenis')
+                            <label class="text-danger">{{ $message }}</label>
+                        @enderror
+                    </div>
                     <br>
                     <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Submit</button>
                     <a href="/barang/index" class="btn btn-outline-danger btn-sm">Cancel</a>

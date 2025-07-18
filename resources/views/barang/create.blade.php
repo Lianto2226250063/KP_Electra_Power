@@ -25,22 +25,33 @@
                         <label class="text-danger">{{ $message }}</label>
                     @enderror
                 </div>
+                <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="Jenis">Jenis</label>
+                    <select name="Jenis" class="form-control ">
+                        <option value="" disabled selected>Pilih Jenis</option>
+                        <option value="Barang">Barang</option>
+                        <option value="Jasa">Jasa</option>
+                    </select>
+                    @error('Jenis')
+                        <label class="text-danger">{{ $message }}</label>
+                    @enderror
+                </div>
                 <br>
-                <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Submit</button>
-                <a href="/barang/index" class="btn btn-outline-danger btn-sm">Cancel</a>
+                <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Simpan</button>
+                <a href="/barang/index" class="btn btn-outline-danger btn-sm">Batal</a>
                 <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                     <div class="modal-header bg-warning">
-                        <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Submit</h5>
+                        <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Simpan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                     </div>
                     <div class="modal-body">
-                        Apakah Anda yakin ingin membuat barang ini?
+                        Apakah Anda yakin ingin menyimpan data barang ini?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-success">Ya, Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-success">Ya</button>
                     </div>
                     </div>
                 </div>

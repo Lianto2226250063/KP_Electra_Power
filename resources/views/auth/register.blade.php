@@ -45,7 +45,7 @@
                     @error('ttd')
                         <label class="text-danger">{{ $message }}</label>
                     @enderror
-                    <label>Data yang diterima berupa .png, .jpg, dan .jpeg</label>
+                    <label>Data yang diterima berupa .png, .jpg, dan .jpeg (Makasimal 5 mb)</label>
                 </div>
                 <div class="form-outline form-white mb-4">
                     <label class="form-label" for="role">Role</label>

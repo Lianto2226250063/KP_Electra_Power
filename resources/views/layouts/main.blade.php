@@ -42,7 +42,7 @@
 
         <a href="/user/index" class="block px-4 py-2 rounded hover:bg-gray-200">Pegawai</a>
 
-        <a href="{{ route('user.editPassword') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Ubah Password</a>
+        <a href="{{ route('user.password.edit') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Ubah Password</a>
 
         <form method="POST" action="{{ route('logout') }}">
           @csrf

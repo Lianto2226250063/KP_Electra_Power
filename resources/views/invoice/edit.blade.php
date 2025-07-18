@@ -87,10 +87,10 @@
                             @endforeach
                         </datalist>
                     </div>
-                    <button type="button" @click="addDetail" class="btn btn-outline-primary btn-sm mt-2">Tambah Detail</button>
+                    <button type="button" @click="addDetail" class="btn btn-outline-primary btn-sm mt-2">Tambah Barang atau Jasa</button>
                     <br><br>
-                    <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Submit</button>
-                    <a href="/invoice/index" class="btn btn-outline-danger btn-sm">Cancel</a>
+                    <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Ubah</button>
+                    <a href="/invoice/index" class="btn btn-outline-danger btn-sm">Batal</a>
                     <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">

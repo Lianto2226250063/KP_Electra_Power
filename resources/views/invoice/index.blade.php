@@ -12,7 +12,7 @@
                 <form action="{{ route('invoice.index') }}" method="GET" class="row g-2 justify-content-end align-items-end">
                     <div class="col-md-auto">
                         <select name="prefix" class="form-control">
-                            <option value="">-- Tipe --</option>
+                            <option value="">Tipe</option>
                             <option value="EP" {{ request('prefix') === 'EP' ? 'selected' : '' }}>EP</option>
                             <option value="EPI" {{ request('prefix') === 'EPI' ? 'selected' : '' }}>EPI</option>
                         </select>
@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-md-auto">
                         <select name="bulan" class="form-control">
-                            <option value="">-- Bulan --</option>
+                            <option value="">Bulan</option>
                             @foreach(range(1, 12) as $b)
                                 <option value="{{ $b }}" {{ request('bulan') == $b ? 'selected' : '' }}>
                                     {{ \Carbon\Carbon::create()->month($b)->translatedFormat('F') }}
@@ -114,6 +114,27 @@
                                     </li>
                                 @endforeach
                             </ul>
+
+                            @php
+                                $total = $item->details->sum(function ($d) {
+                                    return $d->jumlah * $d->harga_satuan;
+                                });
+
+                                $ppn = 0;
+                                if (Str::contains($item->nomor, 'EPI')) {
+                                    $ppn = $total * 0.11;
+                                }
+
+                                $grandTotal = $total + $ppn;
+                            @endphp
+
+                            <div class="mt-3">
+                                @if ($ppn > 0)
+                                    <p class="mb-1"><strong>Subtotal:</strong> Rp {{ number_format($total, 0, ',', '.') }}</p>
+                                    <p class="mb-1"><strong>PPN 11%:</strong> Rp {{ number_format($ppn, 0, ',', '.') }}</p>
+                                @endif
+                                <p class="mb-0"><strong>Total:</strong> Rp {{ number_format($grandTotal, 0, ',', '.') }}</p>
+                            </div>
                         @else
                             <p class="text-muted mt-2">Tidak ada detail.</p>
                         @endif

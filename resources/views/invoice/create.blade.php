@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label for="tipe">Tipe Invoice</label>
                         <select class="form-control" name="tipe" x-model="tipe" required>
-                            <option value="">-- Pilih Tipe --</option>
+                            <option value="">Pilih Tipe</option>
                             <option value="EP">EP</option>
                             <option value="EPI">EPI</option>
                         </select>

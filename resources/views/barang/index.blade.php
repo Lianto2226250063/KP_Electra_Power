@@ -12,7 +12,14 @@
             <div class="col-md-8">
                 <form action="{{ route('barang.index') }}" method="GET" class="row g-2 justify-content-end align-items-end">
                     <div class="col-md-auto">
-                        <input type="text" name="search" class="form-control" placeholder="Cari barang..." value="{{ request('search') }}">
+                        <select name="jenis" class="form-select">
+                            <option value="">Jenis</option>
+                            <option value="Barang" {{ request('jenis') == 'Barang' ? 'selected' : '' }}>Barang</option>
+                            <option value="Jasa" {{ request('jenis') == 'Jasa' ? 'selected' : '' }}>Jasa</option>
+                        </select>
+                    </div>
+                    <div class="col-md-auto">
+                        <input type="text" name="search" class="form-control" placeholder="Cari barang/jasa" value="{{ request('search') }}">
                     </div>
                     <div class="col-md-auto">
                         <button type="submit" class="btn btn-primary">Cari</button>
@@ -28,8 +35,11 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Barang atau Jasa</th>
+                    <th>
+                        {{ request('jenis') === 'Barang' ? 'Barang' : (request('jenis') === 'Jasa' ? 'Jasa' : 'Barang atau Jasa') }}
+                    </th>
                     <th>Harga</th>
+                    <th>Jenis</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -39,6 +49,7 @@
                     <td>{{ $item->id ?? '-' }}</td>
                     <td>{{ $item->nama }}</td>
                     <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                    <td>{{ $item->jenis }}</td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center align-items-center gap-2">
                             <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-outline-success btn-sm mr-2">Edit</a>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2025 at 06:18 PM
+-- Generation Time: Jul 18, 2025 at 08:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.3.19
 
@@ -32,54 +32,55 @@ CREATE TABLE `barangs` (
   `nama` varchar(255) NOT NULL,
   `harga` decimal(15,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `jenis` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `barangs`
 --
 
-INSERT INTO `barangs` (`id`, `nama`, `harga`, `created_at`, `updated_at`) VALUES
-(1, 'Service Coil Break', 1750000.00, '2025-07-17 07:48:30', '2025-07-17 07:48:30'),
-(2, 'Service Serumbung Gardan', 1500000.00, '2025-07-17 07:52:08', '2025-07-17 07:52:08'),
-(3, 'Service AS Lintang', 3000000.00, '2025-07-17 07:52:40', '2025-07-17 07:52:40'),
-(4, 'Kingpen 1 set ukuran 28mm', 900000.00, '2025-07-17 07:53:51', '2025-07-17 07:53:51'),
-(5, 'Botol Dyna drat kiri', 1200000.00, '2025-07-17 07:59:33', '2025-07-17 07:59:33'),
-(6, 'Bearing Motor SKF 6203', 78000.00, '2025-07-17 08:02:59', '2025-07-17 08:02:59'),
-(7, 'Service Bearing Housing', 2500000.00, '2025-07-17 08:09:51', '2025-07-17 08:09:51'),
-(8, 'Bearing Motor NSK 6205', 200000.00, '2025-07-17 08:09:51', '2025-07-17 08:09:51'),
-(9, 'Overhaul Motor 7.5 kW', 3800000.00, '2025-07-17 08:15:38', '2025-07-17 08:15:38'),
-(10, 'Service Panel MCC', 4500000.00, '2025-07-17 08:18:49', '2025-07-17 08:18:49'),
-(11, 'Kabel Power 20m', 750000.00, '2025-07-17 08:18:49', '2025-07-17 08:18:49'),
-(12, 'Rewinding Motor 5 kW', 2750000.00, '2025-07-17 08:35:28', '2025-07-17 08:35:28'),
-(13, 'Bearing Motor SKF 6207', 350000.00, '2025-07-17 08:35:28', '2025-07-17 08:35:28'),
-(14, 'Fan Pendingin Motor Frame 112', 250000.00, '2025-07-17 08:35:28', '2025-07-17 08:35:28'),
-(15, 'Overhaul Motor Seimens 7,5 kW', 3800000.00, '2025-07-17 08:40:03', '2025-07-17 08:40:03'),
-(16, 'Bearing Motor NSK 6305', 280000.00, '2025-07-17 08:40:03', '2025-07-17 08:40:03'),
-(17, 'Fan Pendingin Motor Frame 132 OEM Siemens', 750000.00, '2025-07-17 08:40:03', '2025-07-17 08:40:03'),
-(18, 'Service Coil Break (Motor merk ABB)', 1950000.00, '2025-07-17 08:46:11', '2025-07-17 08:46:11'),
-(19, 'Bearing SKF 6205-2RS', 200000.00, '2025-07-17 08:46:11', '2025-07-17 08:46:11'),
-(20, 'Rewinding Motor WEG 10 kW', 4200000.00, '2025-07-17 08:50:48', '2025-07-17 08:50:48'),
-(21, 'Bearing FAG 6210-C3', 450000.00, '2025-07-17 08:50:48', '2025-07-17 08:50:48'),
-(22, 'Rotor Balancing Dinamis', 1200000.00, '2025-07-17 08:50:48', '2025-07-17 08:50:48'),
-(23, 'Fan Pendingin Frame 160 OEM WEG', 1500000.00, '2025-07-17 08:50:48', '2025-07-17 08:50:48'),
-(24, 'Bearing KOYO 6207-2RS', 320000.00, '2025-07-17 08:52:57', '2025-07-17 08:52:57'),
-(25, 'Fan Pendingin Motor Frame 100 Universal', 250000.00, '2025-07-17 08:52:57', '2025-07-17 08:52:57'),
-(26, 'Overhaul Motor Toshiba 15 kW', 6500000.00, '2025-07-17 08:56:26', '2025-07-17 08:56:26'),
-(27, 'Bearing NTN NU210', 750000.00, '2025-07-17 08:56:26', '2025-07-17 08:56:26'),
-(28, 'Bearing SKF 6203-2RS', 180000.00, '2025-07-17 09:02:07', '2025-07-17 09:02:07'),
-(29, 'Fan Pendingin Motor Frame 90 Universal', 200000.00, '2025-07-17 09:02:08', '2025-07-17 09:02:08'),
-(30, 'Overhaul Motor ABB 11 kW', 4800000.00, '2025-07-17 09:06:26', '2025-07-17 09:06:26'),
-(31, 'Bearing NSK 6210', 400000.00, '2025-07-17 09:06:26', '2025-07-17 09:06:26'),
-(32, 'Fan Pendingin Motor Frame 132 OEM ABB', 900000.00, '2025-07-17 09:06:26', '2025-07-17 09:06:26'),
-(33, 'Service Coil Break Motor WEG', 1750000.00, '2025-07-17 09:09:37', '2025-07-17 09:09:37'),
-(34, 'Bearing Motor KOYO 6205', 250000.00, '2025-07-17 09:09:37', '2025-07-17 09:09:37'),
-(35, 'Bearing Motor FAG NU215', 1200000.00, '2025-07-17 09:12:34', '2025-07-17 09:12:34'),
-(36, 'Kabel Power 25m', 1000000.00, '2025-07-17 09:12:34', '2025-07-17 09:12:34'),
-(37, 'Rewinding Motor Toshiba 5 kW', 6000000.00, '2025-07-17 09:14:02', '2025-07-17 09:14:02'),
-(38, 'Overhaul Motor WEG Pompa Air 3 kW', 2500000.00, '2025-07-17 09:16:34', '2025-07-17 09:16:34'),
-(39, 'Bearing Motor NSK 6204-2RS', 200000.00, '2025-07-17 09:16:34', '2025-07-17 09:16:34'),
-(40, 'Bearing Motor SKF 6202-2RS', 150000.00, '2025-07-17 09:17:30', '2025-07-17 09:17:30');
+INSERT INTO `barangs` (`id`, `nama`, `harga`, `created_at`, `updated_at`, `jenis`) VALUES
+(1, 'Service Coil Break', 1750000.00, '2025-07-17 07:48:30', '2025-07-17 07:48:30', 'Jasa'),
+(2, 'Service Serumbung Gardan', 1500000.00, '2025-07-17 07:52:08', '2025-07-17 07:52:08', 'Jasa'),
+(3, 'Service AS Lintang', 3000000.00, '2025-07-17 07:52:40', '2025-07-17 07:52:40', 'Jasa'),
+(4, 'Kingpen 1 set ukuran 28mm', 900000.00, '2025-07-17 07:53:51', '2025-07-17 07:53:51', 'Barang'),
+(5, 'Botol Dyna drat kiri', 1200000.00, '2025-07-17 07:59:33', '2025-07-17 07:59:33', 'Barang'),
+(6, 'Bearing Motor SKF 6203', 78000.00, '2025-07-17 08:02:59', '2025-07-17 08:02:59', 'Barang'),
+(7, 'Service Bearing Housing', 2500000.00, '2025-07-17 08:09:51', '2025-07-17 08:09:51', 'Jasa'),
+(8, 'Bearing Motor NSK 6205', 200000.00, '2025-07-17 08:09:51', '2025-07-17 08:09:51', 'Barang'),
+(9, 'Overhaul Motor 7.5 kW', 3800000.00, '2025-07-17 08:15:38', '2025-07-17 08:15:38', 'Jasa'),
+(10, 'Service Panel MCC', 4500000.00, '2025-07-17 08:18:49', '2025-07-17 08:18:49', 'Jasa'),
+(11, 'Kabel Power 20m', 750000.00, '2025-07-17 08:18:49', '2025-07-17 08:18:49', 'Barang'),
+(12, 'Rewinding Motor 5 kW', 2750000.00, '2025-07-17 08:35:28', '2025-07-17 08:35:28', 'Jasa'),
+(13, 'Bearing Motor SKF 6207', 350000.00, '2025-07-17 08:35:28', '2025-07-17 08:35:28', 'Barang'),
+(14, 'Fan Pendingin Motor Frame 112', 250000.00, '2025-07-17 08:35:28', '2025-07-17 08:35:28', 'Barang'),
+(15, 'Overhaul Motor Seimens 7,5 kW', 3800000.00, '2025-07-17 08:40:03', '2025-07-17 08:40:03', 'Jasa'),
+(16, 'Bearing Motor NSK 6305', 280000.00, '2025-07-17 08:40:03', '2025-07-17 08:40:03', 'Barang'),
+(17, 'Fan Pendingin Motor Frame 132 OEM Siemens', 750000.00, '2025-07-17 08:40:03', '2025-07-17 08:40:03', 'Barang'),
+(18, 'Service Coil Break (Motor merk ABB)', 1950000.00, '2025-07-17 08:46:11', '2025-07-17 08:46:11', 'Jasa'),
+(19, 'Bearing SKF 6205-2RS', 200000.00, '2025-07-17 08:46:11', '2025-07-17 08:46:11', 'Barang'),
+(20, 'Rewinding Motor WEG 10 kW', 4200000.00, '2025-07-17 08:50:48', '2025-07-17 08:50:48', 'Jasa'),
+(21, 'Bearing FAG 6210-C3', 450000.00, '2025-07-17 08:50:48', '2025-07-17 08:50:48', 'Barang'),
+(22, 'Rotor Balancing Dinamis', 1200000.00, '2025-07-17 08:50:48', '2025-07-17 08:50:48', 'Barang'),
+(23, 'Fan Pendingin Frame 160 OEM WEG', 1500000.00, '2025-07-17 08:50:48', '2025-07-17 08:50:48', 'Barang'),
+(24, 'Bearing KOYO 6207-2RS', 320000.00, '2025-07-17 08:52:57', '2025-07-17 08:52:57', 'Barang'),
+(25, 'Fan Pendingin Motor Frame 100 Universal', 250000.00, '2025-07-17 08:52:57', '2025-07-17 08:52:57', 'Barang'),
+(26, 'Overhaul Motor Toshiba 15 kW', 6500000.00, '2025-07-17 08:56:26', '2025-07-17 08:56:26', 'Jasa'),
+(27, 'Bearing NTN NU210', 750000.00, '2025-07-17 08:56:26', '2025-07-17 08:56:26', 'Barang'),
+(28, 'Bearing SKF 6203-2RS', 180000.00, '2025-07-17 09:02:07', '2025-07-17 09:02:07', 'Barang'),
+(29, 'Fan Pendingin Motor Frame 90 Universal', 200000.00, '2025-07-17 09:02:08', '2025-07-17 09:02:08', 'Barang'),
+(30, 'Overhaul Motor ABB 11 kW', 4800000.00, '2025-07-17 09:06:26', '2025-07-17 09:06:26', 'Jasa'),
+(31, 'Bearing NSK 6210', 400000.00, '2025-07-17 09:06:26', '2025-07-17 09:06:26', 'Barang'),
+(32, 'Fan Pendingin Motor Frame 132 OEM ABB', 900000.00, '2025-07-17 09:06:26', '2025-07-17 09:06:26', 'Barang'),
+(33, 'Service Coil Break Motor WEG', 1750000.00, '2025-07-17 09:09:37', '2025-07-17 09:09:37', 'Jasa'),
+(34, 'Bearing Motor KOYO 6205', 250000.00, '2025-07-17 09:09:37', '2025-07-17 09:09:37', 'Barang'),
+(35, 'Bearing Motor FAG NU215', 1200000.00, '2025-07-17 09:12:34', '2025-07-17 09:12:34', 'Barang'),
+(36, 'Kabel Power 25m', 1000000.00, '2025-07-17 09:12:34', '2025-07-17 09:12:34', 'Barang'),
+(37, 'Rewinding Motor Toshiba 5 kW', 6000000.00, '2025-07-17 09:14:02', '2025-07-17 09:14:02', 'Jasa'),
+(38, 'Overhaul Motor WEG Pompa Air 3 kW', 2500000.00, '2025-07-17 09:16:34', '2025-07-17 09:16:34', 'Jasa'),
+(39, 'Bearing Motor NSK 6204-2RS', 200000.00, '2025-07-17 09:16:34', '2025-07-17 09:16:34', 'Barang'),
+(40, 'Bearing Motor SKF 6202-2RS', 150000.00, '2025-07-17 09:17:30', '2025-07-17 09:17:30', 'Barang');
 
 -- --------------------------------------------------------
 
@@ -209,7 +210,20 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (3, '2023_11_29_121332_create_invoices_table', 1),
 (4, '2025_02_30_163936_create_invoice_details_table', 1),
-(5, '2025_06_19_121224_create_barangs_table', 1);
+(5, '2025_06_19_121224_create_barangs_table', 1),
+(6, '2025_07_18_162105_create_password_reset_tokens_table', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -256,8 +270,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ttd`, `role`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin@gmail.com', NULL, '$2y$12$.jvPiHWmg217XEvZdIYDD.SqdtajRtLoDP/l40MbjbBpMCh067f5K', 'ttd/ttd_admin.png', 'admin', 'non-active', NULL, NULL, '2025-07-17 08:47:24'),
-(2, 'Lian', 'lianto@gmail.com', NULL, '$2y$12$PbJpp3peXY/rJyXLan0WqeNq5p.VgSCOi1FQAAa8c6i1XRRwqjdy.', 'ttd/ttd_lian.png', 'admin', 'active', NULL, '2025-07-17 07:30:09', '2025-07-17 07:30:09'),
-(3, 'Kiven', 'kipen@gmail.com', NULL, '$2y$12$umSlg2lLINT4jlQptj9vPukztjcRvdIlEGNfLJqprIJiyRYjXxAM.', 'ttd/ttd_kiven.png', 'user', 'active', NULL, '2025-07-17 08:48:05', '2025-07-17 08:48:05');
+(2, 'Lian', 'lianto@gmail.com', NULL, '$2y$12$74xh7eMXs0olFQJDLRLl/eEEVt7c7Jk4FRRpDStT00HE3fTdGPUGy', 'ttd/ttd_lian.png', 'admin', 'active', NULL, '2025-07-17 07:30:09', '2025-07-18 08:55:21'),
+(3, 'Kiven', 'kipen@gmail.com', NULL, '$2y$12$umSlg2lLINT4jlQptj9vPukztjcRvdIlEGNfLJqprIJiyRYjXxAM.', 'ttd/ttd_kiven.png', 'user', 'active', NULL, '2025-07-17 08:48:05', '2025-07-17 08:48:05'),
+(4, 'Lianto', 'lianto1566@gmail.com', NULL, '$2y$12$sZZRs7FXZk4OwH3vh0pw0O0n3IkqDBpaTfaruL8urwf.vE/o8mi22', 'ttd/ttd_lianto.png', 'user', 'active', NULL, '2025-07-18 09:33:12', '2025-07-18 10:53:25');
 
 --
 -- Indexes for dumped tables
@@ -291,6 +306,12 @@ ALTER TABLE `invoice_details`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD KEY `password_reset_tokens_email_index` (`email`);
 
 --
 -- Indexes for table `personal_access_tokens`
@@ -327,7 +348,7 @@ ALTER TABLE `invoice_details`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -339,7 +360,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

@@ -36,7 +36,7 @@ class RegisteredUserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
             'role' => 'required',
-            'ttd' => 'required|image|mimes:jpeg,png,jpg,gif'
+            'ttd' => 'required|image|mimes:jpeg,png,jpg|max:5120'
         ]);
 
         // Rename file sesuai nama user

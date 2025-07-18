@@ -16,11 +16,15 @@ class BarangController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('id', 'like', '%' . $search . '%')
-                  ->orWhere('nama', 'like', '%' . $search . '%');
+                    ->orWhere('nama', 'like', '%' . $search . '%');
             });
         }
 
-        $barang = $query->orderBy('id', 'asc')->paginate(10)->withQueryString(); // ASC
+        if ($request->filled('jenis')) {
+            $query->where('jenis', $request->jenis);
+        }
+
+        $barang = $query->orderBy('id', 'asc')->paginate(10)->withQueryString();
 
         return view('barang.index', compact('barang'));
     }
@@ -36,12 +40,13 @@ class BarangController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
+            'jenis' => 'required|string|max:255',
         ]);
 
         Barang::create($validated);
 
         return redirect()->route('barang.index')
-                         ->with('success', 'Barang berhasil ditambahkan.');
+            ->with('success', 'Barang berhasil ditambahkan.');
     }
 
     public function edit(Barang $barang)
@@ -55,12 +60,13 @@ class BarangController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
+            'jenis' => 'required|string|max:255',
         ]);
 
         $barang->update($validated);
 
         return redirect()->route('barang.index')
-                         ->with('success', 'Barang berhasil diupdate.');
+            ->with('success', 'Barang berhasil diupdate.');
     }
 
     public function destroy(Barang $barang)
@@ -68,6 +74,6 @@ class BarangController extends Controller
         $barang->delete();
 
         return redirect()->route('barang.index')
-                         ->with('success', 'Barang berhasil dihapus.');
+            ->with('success', 'Barang berhasil dihapus.');
     }
 }
