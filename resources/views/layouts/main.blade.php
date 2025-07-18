@@ -18,10 +18,10 @@
       .gradient-custom-2 {
         /* fallback for old browsers */
         background: #121766;
-        
+
         /* Chrome 10-25, Safari 5.1-6 */
         background: -webkit-linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
-        
+
         /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         background: linear-gradient(to right, #121766, #2f31a0, #132796, #1f22c7);
       }
@@ -37,11 +37,13 @@
         <a href="/dashboard" class="block px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
         <!-- Invoice -->
         <a href="/invoice/index" class="block px-4 py-2 rounded hover:bg-gray-200">Invoice</a>
-        
-        <a href="/barang/index" class="block px-4 py-2 rounded hover:bg-gray-200">Barang & Jasa</a>    
-        
+
+        <a href="/barang/index" class="block px-4 py-2 rounded hover:bg-gray-200">Barang & Jasa</a>
+
         <a href="/user/index" class="block px-4 py-2 rounded hover:bg-gray-200">Pegawai</a>
-        
+
+        <a href="{{ route('user.editPassword') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Ubah Password</a>
+
         <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="block w-full px-4 py-2 text-left rounded hover:bg-gray-200">

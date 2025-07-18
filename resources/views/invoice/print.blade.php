@@ -73,7 +73,7 @@
 @endphp
 @if (!$isPdf)
 <div class="no-print" style="text-align: right; margin-bottom: 20px;">
-    <a href="{{ route('dashboard') }}" style="padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; margin-right: 10px;">Home</a>
+    <a href="{{ route('invoice.index') }}" style="padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; margin-right: 10px;">Kembali</a>
     <button onclick="window.print()" style="padding: 10px 20px; background-color: #28a745; color: #fff; border: none; border-radius: 5px;">Print</button>
 </div>
 @endif

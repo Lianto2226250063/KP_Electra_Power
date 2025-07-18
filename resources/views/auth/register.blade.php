@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Tambah Invoice')
+@section('title', 'Tambah Akun')
 
 @section('content')
 <div class="row">
@@ -45,6 +45,7 @@
                     @error('ttd')
                         <label class="text-danger">{{ $message }}</label>
                     @enderror
+                    <label>Data yang diterima berupa .png, .jpg, dan .jpeg</label>
                 </div>
                 <div class="form-outline form-white mb-4">
                     <label class="form-label" for="role">Role</label>
@@ -57,8 +58,8 @@
                         <label class="text-danger">{{ $message }}</label>
                     @enderror
                 </div>
-                <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Submit</button>
-                <a href="/user/index" class="btn btn-outline-danger btn-sm">Cancel</a>
+                <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Buat</button>
+                <a href="/user/index" class="btn btn-outline-danger btn-sm">Batal</a>
                 <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -71,7 +72,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-success">Ya, Submit</button>
+                        <button type="submit" class="btn btn-success">Ya</button>
                     </div>
                     </div>
                 </div>

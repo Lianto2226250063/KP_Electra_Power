@@ -15,13 +15,14 @@
                         <input type="text" name="search" class="form-control" placeholder="Cari barang..." value="{{ request('search') }}">
                     </div>
                     <div class="col-md-auto">
-                        <button type="submit" class="btn btn-primary">Filter</button>
+                        <button type="submit" class="btn btn-primary">Cari</button>
                         <a href="{{ route('barang.index') }}" class="btn btn-secondary">Reset</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
     <div class="table-responsive text-center rounded">
         <table class="table">
             <thead>
@@ -41,10 +42,13 @@
                     <td class="text-center">
                         <div class="d-flex justify-content-center align-items-center gap-2">
                             <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-outline-success btn-sm mr-2">Edit</a>
-                            <form method="POST" action="{{ route('barang.destroy', $item->id) }}">
+                            <form method="POST" action="{{ route('barang.destroy', $item->id) }}" class="form-delete">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="btn btn-outline-danger btn-rounded btn-sm show_confirm" data-toggle="tooltip" title="Delete" data-nama='{{ $item->nama }}'>Hapus</button>
+                                <button type="button" class="btn btn-outline-danger btn-sm btn-delete"
+                                    data-nama="{{ $item->nama }}" data-id="{{ $item->id }}">
+                                    Hapus
+                                </button>
                             </form>
                         </div>
                     </td>
@@ -52,9 +56,52 @@
                 @endforeach
             </tbody>
         </table>
+
         <div class="d-flex justify-content-center mt-3">
             {{ $barang->appends(request()->query())->links() }}
         </div>
     </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="modalDeleteLabel">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menghapus data barang/jasa <strong id="deleteInvoiceName"></strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let formToSubmit = null;
+
+        document.querySelectorAll('.btn-delete').forEach(function(button) {
+            button.addEventListener('click', function () {
+                const nama = this.dataset.nama;
+                document.getElementById('deleteInvoiceName').textContent = nama;
+
+                formToSubmit = this.closest('form');
+
+                const modal = new bootstrap.Modal(document.getElementById('modalDelete'));
+                modal.show();
+            });
+        });
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+            if (formToSubmit) {
+                formToSubmit.submit();
+            }
+        });
+    });
+</script>
 @endsection

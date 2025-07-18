@@ -6,7 +6,6 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\BeliController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,25 +14,29 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Route yang boleh diakses berdasarkan status login:
+| - Guest: hanya welcome, login, register
+| - Authenticated user: semua route lain
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route untuk guest (belum login)
+Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('welcome');
+
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 });
 
+// Route yang hanya boleh diakses oleh user yang sudah login
+Route::middleware('auth')->group(function () {
 
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-Route::get('/invoice/index', [InvoiceController::class, 'index'])->name('home');
-Route::get('/invoice/show/{invoice}', [InvoiceController::class, 'show'])->name('invoice.show');
-Route::controller(DashboardController::class)->group(function () {
-    Route::get('/dashboard', 'index')->name('dashboard');
-});
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Invoice
     Route::controller(InvoiceController::class)->prefix('/invoice')->name('invoice.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::get('/invoicemu', 'indexinvoice')->name('indexinvoice');
@@ -45,7 +48,10 @@ Route::controller(DashboardController::class)->group(function () {
         Route::get('/{invoice}/print', 'print')->name('print');
         Route::get('/download/{id}', 'download')->name('download');
         Route::put('/toggle-status/{invoice}', 'toggleStatus')->name('toggleStatus');
+        Route::get('/show/{invoice}', 'show')->name('show');
     });
+
+    // Barang
     Route::controller(BarangController::class)->prefix('/barang')->name('barang.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::get('/barangmu', 'indexbarang')->name('indexbarang');
@@ -55,23 +61,24 @@ Route::controller(DashboardController::class)->group(function () {
         Route::patch('/update/{barang}', 'update')->name('update');
         Route::delete('/delete/{barang}', 'destroy')->name('destroy');
     });
+
+    // User
     Route::controller(UserController::class)->prefix('/user')->name('user.')->group(function () {
         Route::get('/index', 'index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::put('/toggle-status/{user}', 'toggleStatus')->name('toggleStatus');
-        Route::get('/edit/{id}', 'edit')->name('edit');
-        Route::patch('/update/{id}', 'update')->name('update');
         Route::delete('/delete/{id}', 'destroy')->name('destroy');
+        Route::get('/password', [UserController::class, 'editPassword'])->name('user.editPassword');
+        Route::post('/password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+
     });
 
-Route::middleware('auth')->group(function () {
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Authentication Routes...
-
-
+// Route tambahan dari Laravel Breeze atau Jetstream
 require __DIR__.'/auth.php';

@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         @php
-        $details = old('keterangan') 
+        $details = old('keterangan')
             ? collect(old('keterangan'))->map(function ($k, $i) {
                 return [
                     'id' => old('detailId')[$i] ?? null,
@@ -14,7 +14,7 @@
                     'jumlah' => old('jumlah')[$i] ?? '',
                     'harga_satuan' => old('harga_satuan')[$i] ?? '',
                 ];
-            }) 
+            })
             : ($invoice->details ?? collect())->map(function ($item) {
                 return [
                     'id' => $item->id,
@@ -95,15 +95,15 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                         <div class="modal-header bg-warning">
-                            <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Submit</h5>
+                            <h5 class="modal-title" id="konfirmasiModalLabel">Konfirmasi Pengeditan</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                         </div>
                         <div class="modal-body">
                             Apakah Anda yakin ingin mengubah invoice ini?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-success">Ya, Submit</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                            <button type="submit" class="btn btn-success">Ya</button>
                         </div>
                         </div>
                     </div>

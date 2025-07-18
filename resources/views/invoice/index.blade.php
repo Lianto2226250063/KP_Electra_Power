@@ -34,7 +34,7 @@
                         <input type="number" name="tahun" class="form-control form-control-sm" placeholder="Tahun" min="2000" value="{{ request('tahun') }}" style="width: 100px; height: 37px">
                     </div>
                     <div class="col-md-auto">
-                        <button type="submit" class="btn btn-primary">Filter</button>
+                        <button type="submit" class="btn btn-primary">Cari</button>
                         <a href="{{ route('invoice.index') }}" class="btn btn-secondary">Reset</a>
                     </div>
                 </form>
@@ -93,7 +93,7 @@
                                 <form method="POST" action="{{ route('invoice.destroy', $item->id) }}" class="delete-form d-inline">
                                     @csrf
                                     @method('delete')
-                                    <button type="button" class="btn btn-outline-danger btn-sm btn-delete" 
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-delete"
                                         data-nama="{{ $item->nomor }}">
                                         Hapus
                                     </button>
@@ -141,7 +141,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Ya, Hapus</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Ya</button>
       </div>
     </div>
   </div>

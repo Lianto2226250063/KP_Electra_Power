@@ -89,10 +89,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <button type="button" @click="details.push({ keterangan: '', jumlah: '', harga_satuan: '' })" class="btn btn-outline-primary btn-sm mt-2">Tambah Detail</button>
+                    <button type="button" @click="details.push({ keterangan: '', jumlah: '', harga_satuan: '' })" class="btn btn-outline-primary btn-sm mt-2">Tambah Barang/Jasa</button>
                     <br><br>
-                    <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Submit</button>
-                    <a href="/invoice/index" class="btn btn-outline-danger btn-sm">Cancel</a>
+                    <button type="button" class="btn btn-outline-success btn-sm tw-m-3" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Buat</button>
+                    <a href="/invoice/index" class="btn btn-outline-danger btn-sm">Batal</a>
                     <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -104,8 +104,8 @@
                             Apakah Anda yakin ingin membuat invoice ini?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-success">Ya, Submit</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                            <button type="submit" class="btn btn-success">Ya</button>
                         </div>
                         </div>
                     </div>
