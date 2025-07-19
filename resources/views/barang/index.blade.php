@@ -16,6 +16,7 @@
                             <option value="">Jenis</option>
                             <option value="Barang" {{ request('jenis') == 'Barang' ? 'selected' : '' }}>Barang</option>
                             <option value="Jasa" {{ request('jenis') == 'Jasa' ? 'selected' : '' }}>Jasa</option>
+                            <option value="Lainnya" {{ request('jenis') == 'Jasa' ? 'selected' : '' }}>Lainnya</option>
                         </select>
                     </div>
                     <div class="col-md-auto">
