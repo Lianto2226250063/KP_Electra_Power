@@ -24,7 +24,7 @@ class BarangController extends Controller
             $query->where('jenis', $request->jenis);
         }
 
-        $barang = $query->orderBy('id', 'asc')->paginate(10)->withQueryString();
+        $barang = $query->orderBy('id', 'desc')->paginate(10)->withQueryString();
 
         return view('barang.index', compact('barang'));
     }
