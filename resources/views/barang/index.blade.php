@@ -48,7 +48,7 @@
                 @foreach ($barang as $item)
                 <tr>
                     <td>{{ $item->id ?? '-' }}</td>
-                    <td>{{ $item->nama }}</td>
+                    <td class="text-left">{{ $item->nama }}</td>
                     <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                     <td>{{ $item->jenis }}</td>
                     <td class="text-center">
