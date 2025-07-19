@@ -10,4 +10,8 @@ class Barang extends Model
     use HasFactory;
     protected $table = 'barangs';
     protected $fillable = ['nama', 'harga', 'jenis'];
+
+    protected $attributes = [
+        'jenis' => 'lainnya',
+    ];
 }
